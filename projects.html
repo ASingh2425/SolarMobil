@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects - SolarMobil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #E0E0E0; overflow-x: hidden; }
+        #cursor-glow { position: fixed; top: 0; left: 0; width: 800px; height: 800px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 60%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: -1; transition: opacity 0.3s; }
+        #background-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; opacity: 0.2; }
+        #background-pattern { 
+            position: fixed; 
+            inset: 0; 
+            z-index: -2; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-around; 
+            overflow: hidden; 
+            pointer-events: none; 
+            opacity: 0.1;
+        }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .marquee-row { flex-shrink: 0; display: flex; }
+        .animate-marquee { animation: marquee 80s linear infinite; }
+        .banner-text { 
+            font-size: clamp(4rem, 10vw, 8rem); 
+            font-weight: 900; 
+            color: transparent; 
+            -webkit-text-stroke: 1px rgba(34, 197, 94, 0.4);
+            text-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+            white-space: nowrap; 
+            padding: 0 1rem; 
+        }
+        .hero-title-gradient {
+            background: -webkit-linear-gradient(45deg, #ffffff, #999999);
+            background: linear-gradient(45deg, #ffffff, #999999);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        .hero-section { transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
+        .card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .card:hover { background-color: rgba(255, 255, 255, 0.05); border-color: rgba(74, 222, 128, 0.5); transform: translateY(-8px) scale(1.03); box-shadow: 0 0 25px rgba(74, 222, 128, 0.2), 0 15px 25px rgba(0,0,0,0.3); }
+        .cta-button { transition: all 0.3s ease; }
+        .nav-link-active { color: #ffffff !important; }
+        .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
+        .modal-overlay { transition: opacity 0.3s ease; }
+        .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; transform: scale(0.95); opacity: 0; }
+        .modal-container.open .modal-content { transform: scale(1); opacity: 1; }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="cursor-glow"></div>
+    <canvas id="background-canvas"></canvas>
+
+    <div id="background-pattern" aria-hidden="true">
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
+    </div>
+
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="index.html" class="block h-10">
+                    <img src="C:\Users\Anvesha\OneDrive\Desktop\solarmobil_newsite\logo.jpg" alt="SolarMobil Logo" class="h-full w-auto">
+                </a>
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
+                    <li><a href="projects.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors nav-link-active">Projects</a></li>
+                    <li><a href="team.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Team</a></li>
+                    <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
+                </ul>
+                <button id="mobile-menu-button" class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
+             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+            <a href="projects.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Projects</a>
+            <a href="team.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Team</a>
+            <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section pt-40 pb-20 text-center" style="background: radial-gradient(circle, #1a1a1a 0%, #0c0c0c 70%);">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-black uppercase hero-title-gradient tracking-tighter">
+                    Our Projects
+                </h1>
+                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-400">
+                    Explore our portfolio of solar vehicle innovations, from early prototypes to cutting-edge racing machines that push the boundaries of sustainable transportation.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="FREYR" data-year="2013-2014" data-details="FREYR was the team's first prototype, a crucial stepping stone that marked our entry into the world of solar car racing. The vehicle proudly participated in the Indo Asian Solar Challenge (IASC) in 2014." data-image-placeholder="FREYR">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">FREYR</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">FREYR</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">The first prototype that started it all, competing in the Indo Asian Solar Challenge 2014.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                    <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="SERVE" data-year="2015-2016" data-details="The Solar Electric Road Vehicle was our ambitious two-seater project. It successfully became a finalist at QuEST Ingenium 2015 and participated in the Indo Asian Solar Challenge (IASC) in 2016." data-image-placeholder="SERVE">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">SERVE</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">SERVE</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">An ambitious two-seater Solar Electric Road Vehicle that competed at the Indo Asian Solar Challenge.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                     <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="SM S-1" data-year="2017-2019" data-details="Our single-seater, challenger class vehicle that achieved a top speed of 75kmph. The SM S-1 brought home 3rd place in ESVC 2018 and secured 1st in Design and 2nd Overall in ESVC 2019." data-image-placeholder="SM S-1">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">SM S-1</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">SM S-1</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">A single-seater champion, securing top positions in the Electric Solar Vehicle Championship.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                    <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="SM S-2" data-year="2019-2021" data-details="Building on the success of its predecessor, the SM S-2 focused on refining aerodynamics and improving power efficiency. This evolution led to a lighter, faster, and more reliable solar vehicle." data-image-placeholder="SM S-2">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">SM S-2</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">SM S-2</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Evolving the championship design with refined aerodynamics and greater efficiency.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                    <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="ZENITH" data-year="2021-2023" data-details="ZENITH represents the pinnacle of our engineering achievements, featuring a full carbon-fibre monocoque and cutting-edge battery technology designed for international competitions." data-image-placeholder="ZENITH">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">ZENITH</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">ZENITH</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">The pinnacle of our engineering with a full carbon-fibre monocoque chassis.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                    <div class="card rounded-2xl p-6 flex flex-col zoom-in-section" data-title="HELIARK" data-year="2023-Present" data-details="HELIARK is our current generation vehicle, being developed to compete at the highest level of solar racing, including the World Solar Challenge. It features state-of-the-art solar arrays and an advanced telemetry system." data-image-placeholder="HELIARK">
+                        <div class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center mb-6"><span class="text-gray-500">HELIARK</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2">HELIARK</h3>
+                        <p class="text-sm text-gray-400 mb-4 flex-grow">Our current generation car, engineered for the world's most demanding solar challenges.</p>
+                        <button class="view-details-btn mt-4 w-full bg-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/20 transition-colors">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="project-modal" class="modal-container hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="modal-content relative bg-[#181818] w-full max-w-2xl max-h-[90vh] rounded-2xl border border-gray-700 shadow-2xl p-8 overflow-y-auto">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="modal-image" class="w-full h-64 bg-gray-800 rounded-lg flex items-center justify-center mb-6 text-gray-500"></div>
+            <h2 id="modal-title" class="text-3xl font-bold text-white mb-2"></h2>
+            <div class="flex items-center space-x-4 text-sm text-gray-400 mb-4">
+                <span id="modal-year"></span>
+            </div>
+            <p id="modal-details" class="text-gray-300"></p>
+        </div>
+    </div>
+
+     <footer class="py-12 bg-black/20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2025 SolarMobil. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="about.html" class="hover:text-gray-300">About</a>
+                    <a href="projects.html" class="hover:text-gray-300">Projects</a>
+                    <a href="team.html" class="hover:text-gray-300">Team</a>
+                    <a href="contact.html" class="hover:text-gray-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => { header.style.backgroundColor = window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)'; });
+            const cursorGlow = document.getElementById('cursor-glow');
+            if(cursorGlow) { window.addEventListener('mousemove', (e) => { cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px'; }); document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; }); document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; }); }
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) { window.addEventListener('scroll', () => { const scrollY = window.scrollY; const scale = Math.max(0.8, 1 - scrollY / 1000); const opacity = Math.max(0.4, 1 - scrollY / 500); heroSection.style.transform = `scale(${scale})`; heroSection.style.opacity = opacity; }); }
+            const sections = document.querySelectorAll('.zoom-in-section');
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); } }); }, { threshold: 0.15 });
+            sections.forEach(section => { observer.observe(section); });
+            const canvas = document.getElementById('background-canvas');
+            if(canvas) { const ctx = canvas.getContext('2d'); let width, height; const resizeCanvas = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+                const drawTrack = () => { ctx.clearRect(0, 0, width, height); ctx.strokeStyle = 'rgba(34, 197, 94, 0.5)'; ctx.lineWidth = 2; ctx.shadowColor = 'rgba(34, 197, 94, 1)'; ctx.shadowBlur = 10; ctx.beginPath(); ctx.moveTo(width * 0.1, height * 0.2); ctx.bezierCurveTo(width * 0.3, height * 0.4, width * 0.7, height * 0.1, width * 0.9, height * 0.3); ctx.stroke(); ctx.beginPath(); ctx.moveTo(width * 0.95, height * 0.8); ctx.bezierCurveTo(width * 0.8, height * 0.9, width * 0.4, height * 0.95, width * 0.1, height * 0.7); ctx.stroke(); }
+                window.addEventListener('resize', () => { resizeCanvas(); drawTrack(); }); resizeCanvas(); drawTrack(); }
+            const modalContainer = document.getElementById('project-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalOverlay = document.querySelector('.modal-overlay');
+            const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalYear = document.getElementById('modal-year');
+            const modalDetails = document.getElementById('modal-details');
+            const openModal = (card) => { modalImage.textContent = card.dataset.imagePlaceholder; modalTitle.textContent = card.dataset.title; modalYear.textContent = card.dataset.year; modalDetails.textContent = card.dataset.details; modalContainer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; setTimeout(() => modalContainer.classList.add('open'), 10); };
+            const closeModal = () => { modalContainer.classList.remove('open'); setTimeout(() => { modalContainer.classList.add('hidden'); document.body.style.overflow = ''; }, 300); };
+            viewDetailsBtns.forEach(btn => { btn.addEventListener('click', (e) => { const card = e.target.closest('.card'); if (card) openModal(card); }); });
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', closeModal);
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalContainer.classList.contains('hidden')) closeModal(); });
+        });
+    </script>
+</body>
+</html>
+
