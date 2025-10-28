@@ -9,6 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Magneto'; /* Custom name for the font */
+            /* Load the font file from your project folder */
+            src:url("Magneto Bold.ttf") format('truetype');
+        }
         body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #E0E0E0; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: 'Exo 2', sans-serif; }
         #cursor-glow { position: fixed; top: 0; left: 0; width: 800px; height: 800px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 60%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: -1; transition: opacity 0.3s; }
@@ -17,52 +22,147 @@
         @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
         .marquee-row { flex-shrink: 0; display: flex; }
         .animate-marquee { animation: marquee 80s linear infinite; }
-        .banner-text { font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(34, 197, 94, 0.4); text-shadow: 0 0 15px rgba(34, 197, 94, 0.3); white-space: nowrap; padding: 0 1rem; }
-        .hero-title-gradient { background: linear-gradient(45deg, #ffffff, #aaaaaa); background: -webkit-linear-gradient(45deg, #ffffff, #aaaaaa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+        .banner-text {
+            font-family: 'Magneto', display; /* Use custom font */
+            font-size: clamp(4rem, 10vw, 8rem);
+            /* font-weight: 900; */ /* Weight is defined by the font file */
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(34, 197, 94, 0.6); 
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5); 
+            white-space: nowrap;
+            padding: 0 1rem;
+            line-height: 1; 
+        }        .hero-title-gradient { background: linear-gradient(45deg, #ffffff, #aaaaaa); background: -webkit-linear-gradient(45deg, #ffffff, #aaaaaa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .hero-section { transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
         .nav-link-active { color: #ffffff !important; }
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
+        /* Form Styles */
+        .form-input, .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E0E0E0;
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: rgba(34, 197, 94, 0.5); /* green-500 */
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3); /* green-500 */
+        }
+        .form-select {
+            appearance: none; /* Remove default arrow */
+             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+             background-position: right 0.5rem center;
+             background-repeat: no-repeat;
+             background-size: 1.5em 1.5em;
+             padding-right: 2.5rem; /* Space for arrow */
+        }
+         /* Style for dropdown options */
+        .form-select option {
+            background-color: #1a1a1a;
+            color: #E0E0E0;
+        }
+        .submit-button {
+             transition: all 0.3s ease;
+             display: inline-block;
+             padding: 12px 28px;
+             background-color: #22c55e; /* Green */
+             color: #0c0c0c; /* Dark text */
+             border-radius: 999px;
+             font-weight: 600;
+             text-decoration: none;
+             border: none;
+             cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #16a34a; /* Darker green */
+        }
+        /* Dropdown Menu Styles */
+        .dropdown { position: relative; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: rgba(12, 12, 12, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.5rem; padding: 0.5rem; margin-top: 0.5rem; width: 160px; z-index: 50; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-item { display: block; padding: 0.5rem 1rem; color: #E0E0E0; font-size: 0.875rem; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+        .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
     </style>
 </head>
 <body class="antialiased">
     <div id="cursor-glow"></div>
     <canvas id="background-canvas"></canvas>
     <div id="background-pattern" aria-hidden="true">
-        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
-        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
-        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SOLARMOBIL</span><span class="banner-text">SOLARMOBIL</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
     </div>
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
-                <a href="index.html" class="block h-10"><img src="logo.jpg" alt="SolarMobil Logo" class="h-full w-auto"></a>
+                 <!-- Corrected logo path -->
+                <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
-                    <li><a href="projects.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Projects</a></li>
+                    <!-- Projects Dropdown -->
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Projects
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="projects-dropdown" class="dropdown-menu">
+                            <!-- Set "Cars" as active -->
+                            <a href="projects.html" class="dropdown-item">Cars</a>
+                            <a href="research.html" class="dropdown-item">Research</a>
+                        </div>
+                    </li>
+                    
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
-                    <li><a href="team.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Team</a></li>
-                    <li><a href="gallery.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Gallery</a></li>
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Team
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="team-dropdown" class="dropdown-menu">
+                            <a href="team.html" class="dropdown-item">Current Team</a>
+                            <a href="alumni.html" class="dropdown-item">Alumni</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Media
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="media-dropdown" class="dropdown-menu">
+                            <a href="gallery.html" class="dropdown-item">Gallery</a>
+                            <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                        </div>
+                    </li>
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
                 <button id="mobile-menu-button" class="md:hidden text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
             </nav>
         </div>
+         <!-- Mobile menu remains unchanged -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
-            <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
-            <a href="projects.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Projects</a>
-            <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
-            <a href="team.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Team</a>
-            <a href="gallery.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
-            <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
-            <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
+             <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
+             <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
+             <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
+             <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
+             <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
+             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
+             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
+             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
     </header>
     <main>
         <section class="hero-section pt-48 pb-32 text-center" style="background: radial-gradient(circle, #1a1a1a 0%, #0c0c0c 80%);">
             <div class="container mx-auto px-6">
-                <h1 class="text-5xl md:text-8xl font-black uppercase hero-title-gradient tracking-tighter">Contact Us</h1>
+                <h1 class="text-5xl md:text-8xl font-bold uppercase hero-title-gradient tracking-tighter">Contact Us</h1>
                 <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">Ready to collaborate, sponsor, or join our mission? We'd love to hear from you and explore how we can work together to advance sustainable transportation.</p>
             </div>
         </section>
@@ -75,13 +175,83 @@
                 <div class="max-w-4xl mx-auto mt-16 grid md:grid-cols-2 gap-8 text-center">
                     <div class="bg-black/20 p-8 rounded-lg zoom-in-section">
                         <h3 class="text-xl font-bold text-white">Our Address</h3>
-                        <p class="text-gray-400 mt-2">SolarMobil, Innovation Centre<br>Manipal Institute of Technology<br>Manipal, Karnataka - 576104</p>
+                        <p class="text-gray-400 mt-2">SolarMobil, Techshila<br>Workshop 07, Manipal Institute of Technology<br>Manipal, Karnataka - 576104</p>
                     </div>
                     <div class="bg-black/20 p-8 rounded-lg zoom-in-section">
                         <h3 class="text-xl font-bold text-white">Contact Details</h3>
-                        <p class="text-gray-400 mt-2">solarmobil.mit@manipal.edu</p>
-                        <p class="text-gray-400 mt-1">Sarthak Vashishtha: +91 95888 77508</p>
+                        <p class="text-gray-400 mt-2">team.solarmobil@gmail.com</p>
+                        <p class="text-gray-400 mt-1">Varun Jayaram: +91 95888 77508</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Recruitment Form Section -->
+        <section class="py-20 md:py-32 bg-black/20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto zoom-in-section">
+                    <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Recruitment</p>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mt-4">Join Our Team</h2>
+                    <p class="max-w-2xl mx-auto mt-6 text-gray-400">
+                        Passionate about sustainable technology and hands-on engineering? Fill out the form below to express your interest in joining SolarMobil.
+                    </p>
+                </div>
+
+                <form id="recruitment-form" class="max-w-xl mx-auto mt-12 space-y-6 zoom-in-section">
+                    <div>
+                        <label for="full-name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" required class="form-input w-full">
+                    </div>
+                    <div>
+                        <label for="reg-number" class="block text-sm font-medium text-gray-300 mb-2">Registration Number</label>
+                        <input type="text" id="reg-number" name="reg-number" required class="form-input w-full">
+                    </div>
+                    <div>
+                        <label for="whatsapp-number" class="block text-sm font-medium text-gray-300 mb-2">WhatsApp Number</label>
+                        <input type="tel" id="whatsapp-number" name="whatsapp-number" required class="form-input w-full">
+                    </div>
+                    <div>
+                        <label for="subsystem" class="block text-sm font-medium text-gray-300 mb-2">Subsystem Preference</label>
+                        <select id="subsystem" name="subsystem" required class="form-select w-full">
+                            <option value="" disabled selected>Select a subsystem</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Strategy">Strategy</option>
+                            <option value="Research">Research</option>
+                            <option value="Management">Management</option>
+                        </select>
+                    </div>
+                    <div class="text-center pt-4">
+                        <button type="submit" class="submit-button">Submit Application</button>
+                    </div>
+                </form>
+                <!-- Success Message Placeholder -->
+                 <div id="success-message" class="hidden max-w-xl mx-auto mt-8 p-4 bg-green-900/50 border border-green-700 rounded-lg text-center text-green-300">
+                    Thank you for your application! We will get back to you soon.
+                </div>
+            </div>
+        </section>
+        <!-- End Recruitment Form Section -->
+
+        <section class="contact-section py-16">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Techshila, Workshop 07, Opp. Recreation Center,<br>
+                        Manipal Institute of Technology, Manipal,<br>
+                        Udupi, Karnataka - 576 104.
+                    </p>
+                </div>
+                 <div class="text-left md:text-right">
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
+                     <p class="text-gray-400 text-sm mb-1">
+                        Varun Jayaram (Team Manager): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     </p>
+                    <p class="text-gray-400 text-sm">
+                        Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
+                    </p>
                 </div>
             </div>
         </section>
@@ -105,6 +275,46 @@
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            // --- NEW DROPDOWN CLICK LOGIC ---
+            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent click from bubbling up to document
+                    const dropdownId = toggle.getAttribute('data-dropdown-toggle');
+                    const dropdownMenu = document.getElementById(dropdownId);
+
+                    if (dropdownMenu) {
+                        // Check if this dropdown is already open
+                        const isOpen = dropdownMenu.classList.contains('is-open');
+
+                        // Close all other open dropdowns
+                        document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                            if (openMenu !== dropdownMenu) {
+                                openMenu.classList.remove('is-open');
+                            }
+                        });
+
+                        // Toggle the current dropdown
+                        if (isOpen) {
+                            dropdownMenu.classList.remove('is-open');
+                        } else {
+                            dropdownMenu.classList.add('is-open');
+                        }
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            window.addEventListener('click', (e) => {
+                // Check if the click is outside a dropdown toggle or menu
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                        openMenu.classList.remove('is-open');
+                    });
+                }
+            });
+            // --- END NEW DROPDOWN LOGIC ---
             const header = document.getElementById('header');
             window.addEventListener('scroll', () => { header.style.backgroundColor = window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)'; });
             const cursorGlow = document.getElementById('cursor-glow');

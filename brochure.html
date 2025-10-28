@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brochure - SolarMobil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Magneto'; /* Custom name for the font */
+            /* Load the font file from your project folder */
+            src:url("Magneto Bold.ttf") format('truetype');
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #E0E0E0; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Exo 2', sans-serif; }
+        #cursor-glow { position: fixed; top: 0; left: 0; width: 800px; height: 800px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 60%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: -1; transition: opacity 0.3s; }
+        #background-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; opacity: 0.2; }
+        #background-pattern { position: fixed; inset: 0; z-index: -2; display: flex; flex-direction: column; justify-content: space-around; overflow: hidden; pointer-events: none; opacity: 0.1; }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .marquee-row { flex-shrink: 0; display: flex; }
+        .animate-marquee { animation: marquee 80s linear infinite; }
+        .banner-text {
+            font-family: 'Magneto', display; /* Use custom font */
+            font-size: clamp(4rem, 10vw, 8rem);
+            /* font-weight: 900; */ /* Weight is defined by the font file */
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(34, 197, 94, 0.6); 
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5); 
+            white-space: nowrap;
+            padding: 0 1rem;
+            line-height: 1; 
+        }        .hero-title-gradient {
+            background: -webkit-linear-gradient(45deg, #ffffff, #aaaaaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        .nav-link-active { color: #ffffff !important; }
+
+         /* Title Section Style */
+         .title-section {
+             padding-top: 12rem;
+             padding-bottom: 4rem;
+             text-align: center;
+             background: radial-gradient(circle, #1a1a1a 0%, #0c0c0c 80%);
+             transition: opacity 0.5s ease-out;
+         }
+
+        /* Card Stack Styles */
+        #card-stack-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px - 84px - 4rem);
+            padding: 2rem;
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            overflow: visible;
+        }
+        #card-stack {
+            position: relative; /* Keep relative for button positioning inside */
+            width: 90vw;
+            height: 80vh;
+            max-width: 500px;
+            max-height: 707px;
+            aspect-ratio: 1 / 1.414;
+        }
+        .brochure-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: center center;
+            opacity: 1;
+             /* Default transition for smooth stacking appearance */
+             transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+             /* Ensure cards start behind */
+             z-index: 1;
+        }
+         .brochure-card.is-top {
+             z-index: 10; /* Ensure top card is always highest */
+             transform: scale(1) translateY(0);
+             opacity: 1;
+         }
+        .brochure-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+         /* Class for animating card to back */
+        .brochure-card.is-moving-back {
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            transform: scale(0.9) translateY(10px);
+            opacity: 0;
+            z-index: 5; /* Lower than top, higher than stack */
+        }
+        /* Class for card coming from back to front */
+        .brochure-card.is-coming-front {
+             transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+             transform: scale(1) translateY(0);
+             opacity: 1;
+             z-index: 11; /* Ensure it animates above the current top */
+        }
+
+
+        /* Navigation Buttons - Adjusted Position */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.06); /* Slightly lighter */
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            width: 44px; /* Larger */
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.18s, transform 0.12s;
+            z-index: 101; /* Higher than top card */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
+        .nav-button:hover,
+        .nav-button:focus {
+            background-color: rgba(34,197,94,0.15); /* Green hover */
+            transform: translateY(-50%) scale(1.03);
+            outline: none;
+        }
+        /* Position buttons slightly inside the card stack */
+        #prev-button { left: 12px; }
+        #next-button { right: 12px; }
+
+        @media (max-width: 700px) {
+            #prev-button { left: 8px; }
+            #next-button { right: 8px; }
+            .nav-button { width: 40px; height: 40px; }
+            #card-stack { width: 80vw; }
+        }
+
+
+        /* Dropdown Styles */
+        .dropdown { position: relative; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: rgba(12, 12, 12, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.5rem; padding: 0.5rem; margin-top: 0.5rem; width: 160px; z-index: 50; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-item { display: block; padding: 0.5rem 1rem; color: #E0E0E0; font-size: 0.875rem; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+        .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+
+        /* Header Styles */
+        header { position: fixed; z-index: 50; left: 0; right: 0; top: 0; }
+        main { padding-top: 0; } /* Remove padding, title section handles offset */
+
+        /* Contact Section */
+        .contact-section { background-color: #111111; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="cursor-glow"></div>
+    <canvas id="background-canvas"></canvas>
+    <div id="background-pattern" aria-hidden="true">
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+    </div>
+
+    <header id="header">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
+                <ul class="hidden md:flex items-center space-x-6">
+                    <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
+                    <!-- Projects Dropdown -->
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Projects
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="projects-dropdown" class="dropdown-menu">
+                            <!-- Set "Cars" as active -->
+                            <a href="projects.html" class="dropdown-item">Cars</a>
+                            <a href="research.html" class="dropdown-item">Research</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Team
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="team-dropdown" class="dropdown-menu">
+                            <a href="team.html" class="dropdown-item">Current Team</a>
+                            <a href="alumni.html" class="dropdown-item">Alumni</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Media
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="media-dropdown" class="dropdown-menu">
+                            <a href="gallery.html" class="dropdown-item">Gallery</a>
+                            <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                        </div>
+                    </li>
+                    <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
+                    <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
+                </ul>
+                <button id="mobile-menu-button" class="md:hidden text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
+             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
+             <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
+             <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
+             <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
+             <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
+             <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
+             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
+             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
+             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
+             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- New Title Section -->
+        <section id="brochure-title-section" class="title-section">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-black uppercase hero-title-gradient tracking-tighter">
+                    Our Brochure
+                </h1>
+                <p class="max-w-2xl mx-auto mt-4 text-lg text-gray-400">
+                    Click the arrows to navigate through the pages.
+                </p>
+            </div>
+        </section>
+
+        <!-- Card Stack Container -->
+        <section id="card-stack-container">
+            <div id="card-stack">
+                <!-- Page Cards -->
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0001.jpg" alt="Page 1"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0002.jpg" alt="Page 2"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0003.jpg" alt="Page 3"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0004.jpg" alt="Page 4"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0005.jpg" alt="Page 5"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0006.jpg" alt="Page 6"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0007.jpg" alt="Page 7"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0008.jpg" alt="Page 8"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0009.jpg" alt="Page 9"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0010.jpg" alt="Page 10"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0011.jpg" alt="Page 11"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0012.jpg" alt="Page 12"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0013.jpg" alt="Page 13"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0014.jpg" alt="Page 14"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0015.jpg" alt="Page 15"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0016.jpg" alt="Page 16"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0017.jpg" alt="Page 17"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0018.jpg" alt="Page 18"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0019.jpg" alt="Page 19"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0020.jpg" alt="Page 20"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0021.jpg" alt="Page 21"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0022.jpg" alt="Page 22"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0023.jpg" alt="Page 23"></div>
+                <div class="brochure-card"><img src="Team SolarMobil Brochure_page-0024.jpg" alt="Page 24"></div>
+
+                <!-- Navigation Buttons -->
+                <button id="prev-button" class="nav-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button id="next-button" class="nav-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+         <!-- Contact Section -->
+         <section class="contact-section py-16">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Techshila, Workshop 07, Opp. Recreation Center,<br>
+                        Manipal Institute of Technology, Manipal,<br>
+                        Udupi, Karnataka - 576 104.
+                    </p>
+                </div>
+                 <div class="text-left md:text-right">
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
+                     <p class="text-gray-400 text-sm mb-1">
+                        Varun Jayram (Team Leader): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     </p>
+                    <p class="text-gray-400 text-sm">
+                        Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 bg-black/20">
+        <!-- Footer content remains the same -->
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2025 SolarMobil. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                     <a href="https://www.linkedin.com/company/solarmobil-manipal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.5 2h-15A2.5 2.5 0 002 4.5v15A2.5 2.5 0 004.5 22h15a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0019.5 2zM8.5 18H5.5V9h3v9zm-1.5-10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18.5 18h-3v-4.25c0-1.02-.02-2.32-1.41-2.32-1.41 0-1.63 1.1-1.63 2.24V18h-3V9h2.88v1.32h.04c.4-.76 1.38-1.55 2.84-1.55 3.04 0 3.6 2 3.6 4.6V18z" clip-rule="evenodd"></path></svg> </a>
+                    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.415 2.175 8.796 2.163 12 2.163zm0 1.441c-3.151 0-3.505.012-4.725.068-2.668.122-3.856 1.31-3.978 3.978-.056 1.22-.068 1.574-.068 4.725s.012 3.505.068 4.725c.122 2.668 1.31 3.856 3.978 3.978 1.22.056 1.574.068 4.725.068s3.505-.012 4.725-.068c2.668-.122 3.856-1.31 3.978-3.978.056-1.22.068-1.574-.068-4.725s-.012-3.505-.068-4.725c-.122-2.668-1.31-3.856-3.978-3.978C15.505 3.615 15.151 3.604 12 3.604zm0 10.395a4.25 4.25 0 100-8.5 4.25 4.25 0 000 8.5zm0-1.441a2.809 2.809 0 110-5.618 2.809 2.809 0 010 5.618zm4.332-6.52a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z"></path></svg> </a>
+                    <a href="https://x.com/TeamSolarmobil" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="X (formerly Twitter)"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 7.184L18.901 1.153zm-1.65 19.54h2.6l-13.8-19.54H3.85l13.4 19.54z"></path></svg> </a>
+                    <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd"></path></svg> </a>
+                    <a href="https://www.facebook.com/SolarMobilMIT/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88V15.5H8.31v-3.5h2.13v-2.6c0-2.12 1.25-3.29 3.2-3.29.91 0 1.84.16 1.84.16v2.99h-1.5a1.23 1.23 0 00-1.39 1.33v1.51h3.33l-.53 3.5h-2.8v6.38A10.01 10.01 0 0022 12z" clip-rule="evenodd"></path></svg> </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            // --- NEW DROPDOWN CLICK LOGIC ---
+            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent click from bubbling up to document
+                    const dropdownId = toggle.getAttribute('data-dropdown-toggle');
+                    const dropdownMenu = document.getElementById(dropdownId);
+
+                    if (dropdownMenu) {
+                        // Check if this dropdown is already open
+                        const isOpen = dropdownMenu.classList.contains('is-open');
+
+                        // Close all other open dropdowns
+                        document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                            if (openMenu !== dropdownMenu) {
+                                openMenu.classList.remove('is-open');
+                            }
+                        });
+
+                        // Toggle the current dropdown
+                        if (isOpen) {
+                            dropdownMenu.classList.remove('is-open');
+                        } else {
+                            dropdownMenu.classList.add('is-open');
+                        }
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            window.addEventListener('click', (e) => {
+                // Check if the click is outside a dropdown toggle or menu
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                        openMenu.classList.remove('is-open');
+                    });
+                }
+            });
+            // --- END NEW DROPDOWN LOGIC ---
+
+            const header = document.getElementById('header');
+            const titleSection = document.getElementById('brochure-title-section');
+            let headerHeight = 0;
+            if(header) {
+                 headerHeight = header.offsetHeight;
+                 window.addEventListener('scroll', handleHeaderScroll);
+                 handleHeaderScroll();
+                 window.addEventListener('resize', () => { headerHeight = header.offsetHeight; });
+            }
+
+            function handleHeaderScroll() {
+                 if(header) { header.style.backgroundColor = window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)'; }
+            }
+
+            function handleTitleFade() {
+                if (!titleSection) return;
+                const scrollY = window.scrollY;
+                const titleHeight = titleSection.offsetHeight;
+                const fadeStart = titleHeight * 0.1;
+                const fadeEnd = titleHeight * 0.7;
+                let opacity = 1;
+                if (scrollY > fadeStart) {
+                    opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+                    opacity = Math.max(0, Math.min(1, opacity));
+                }
+                titleSection.style.opacity = opacity;
+            }
+            window.addEventListener('scroll', handleTitleFade);
+            handleTitleFade();
+
+            const cursorGlow = document.getElementById('cursor-glow');
+             if (cursorGlow) { /* ... cursor glow listeners ... */ }
+
+            const canvas = document.getElementById('background-canvas');
+             if (canvas) { /* ... background canvas drawing ... */ }
+
+
+            // --- Card Stack Logic --- Corrected Again ---
+            const cards = Array.from(document.querySelectorAll('.brochure-card')); // Use Array.from for easier manipulation
+            const nextButton = document.getElementById('next-button');
+            const prevButton = document.getElementById('prev-button');
+            let currentIndex = 0; // Start at index 0 (Page 1)
+            const totalCards = cards.length;
+            let isAnimating = false;
+
+            function applyCardStyles() {
+                console.log("Applying styles, current index:", currentIndex);
+                cards.forEach((card, index) => {
+                    // Calculate how many steps away the card is from the current top card
+                    // Positive diff means card is "after" current in sequence (visually under)
+                    // Negative diff means card is "before" current in sequence (visually under)
+                    let diff = index - currentIndex;
+
+                    // Handle wrapping around the array ends
+                    if (diff > totalCards / 2) {
+                        diff -= totalCards; // Card is closer by wrapping backward
+                    } else if (diff < -totalCards / 2) {
+                        diff += totalCards; // Card is closer by wrapping forward
+                    }
+
+                    // Calculate z-index: top card (diff 0) has highest z-index
+                    const zIndex = totalCards - Math.abs(diff);
+                    card.style.zIndex = zIndex;
+
+                    // Apply transform and opacity
+                    if (index === currentIndex) {
+                        // Top card
+                        card.style.transform = 'scale(1) translateY(0)';
+                        card.style.opacity = '1';
+                         card.classList.add('is-top'); // Add class for top card
+                    } else {
+                        // Cards underneath
+                         card.classList.remove('is-top');
+                        // Apply stacking effect based on absolute difference (how far under)
+                        const depth = Math.abs(diff);
+                        const scale = 1 - Math.min(depth, 3) * 0.03;
+                        const translateY = Math.min(depth, 3) * 8;
+                        card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+                        card.style.opacity = Math.max(0, 1 - Math.min(depth, 3) * 0.3); // Fade more sharply
+                    }
+
+                     // Remove animation classes after applying styles
+                     card.classList.remove('is-moving-back', 'is-coming-front');
+                     // Restore default transition if it was removed
+                     card.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+                });
+            }
+
+
+            nextButton.addEventListener('click', () => {
+                 if (isAnimating) return;
+                 console.log("Next clicked. Current:", currentIndex);
+                 isAnimating = true;
+
+                const currentCard = cards[currentIndex];
+                const nextIndex = (currentIndex + 1) % totalCards;
+
+                // Animate current card moving back
+                currentCard.classList.remove('is-top');
+                currentCard.classList.add('is-moving-back');
+                // Temporarily lower z-index during animation
+                currentCard.style.zIndex = totalCards - 1;
+
+
+                // Update index
+                currentIndex = nextIndex;
+
+                // Style the NEW top card (it's already positioned underneath)
+                 if (cards[currentIndex]) {
+                     cards[currentIndex].style.zIndex = totalCards + 1; // Bring above animating card
+                     cards[currentIndex].style.transform = 'scale(1) translateY(0)';
+                     cards[currentIndex].style.opacity = '1';
+                     cards[currentIndex].classList.add('is-top');
+                 }
+
+
+                setTimeout(() => {
+                    currentCard.classList.remove('is-moving-back');
+                    applyCardStyles(); // Reset all styles based on new index
+                    isAnimating = false;
+                    console.log("Next animation end. New current:", currentIndex);
+                }, 500);
+            });
+
+             prevButton.addEventListener('click', () => {
+                 if (isAnimating) return;
+                  console.log("Prev clicked. Current:", currentIndex);
+                 isAnimating = true;
+
+                 const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
+                 const prevCard = cards[prevIndex];
+                 const currentCard = cards[currentIndex];
+
+                 // 1. Prepare prev card: Position it as if it's moving back, but hide it initially
+                 prevCard.style.transition = 'none'; // No transition for setup
+                 prevCard.style.transform = 'scale(0.9) translateY(10px)';
+                 prevCard.style.opacity = '0';
+                 prevCard.style.zIndex = totalCards + 1; // Bring it to the very top ready to animate in
+
+
+                 // 2. Animate prev card coming to front
+                 requestAnimationFrame(() => { // Allow styles to apply
+                     prevCard.classList.add('is-coming-front');
+                 });
+
+                 // 3. Update index BEFORE animating current card back
+                 currentIndex = prevIndex;
+
+                 // 4. Animate the OLD top card moving back slightly (optional)
+                  currentCard.classList.remove('is-top');
+                  currentCard.style.zIndex = totalCards -1; // Send it back one level
+                  currentCard.style.transform = `scale(${1 - 0.03}) translateY(${8}px)`;
+                  currentCard.style.opacity = `${1 - 0.2}`;
+
+
+                 // 5. Clean up after animation
+                 setTimeout(() => {
+                     prevCard.classList.remove('is-coming-front');
+                     // applyCardStyles will fix currentCard's style
+                     applyCardStyles();
+                     isAnimating = false;
+                     console.log("Prev animation end. New current:", currentIndex);
+                 }, 500);
+            });
+
+            // Initial setup
+            console.log("Initial setup. Current:", currentIndex);
+            applyCardStyles();
+        });
+    </script>
+</body>
+</html>
+
