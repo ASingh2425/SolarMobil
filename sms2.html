@@ -113,6 +113,7 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
+                <!-- Logo path from about.html -->
                 <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
@@ -124,13 +125,14 @@
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="projects-dropdown" class="dropdown-menu">
-                            <!-- Set "Cars" as active -->
                             <a href="projects.html" class="dropdown-item">Cars</a>
                             <a href="research.html" class="dropdown-item">Research</a>
                         </div>
                     </li>
                     
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
+                    
+                    <!-- Team Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Team
@@ -141,6 +143,8 @@
                             <a href="alumni.html" class="dropdown-item">Alumni</a>
                         </div>
                     </li>
+
+                    <!-- Media Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
@@ -151,31 +155,37 @@
                             <a href="newsletter.html" class="dropdown-item">Newsletter</a>
                         </div>
                     </li>
+                    
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
+                    
+                    <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
+                    <li><a href="fundraising.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
                 <button id="mobile-menu-button" class="md:hidden text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
             </nav>
         </div>
-         <!-- Mobile Menu -->
-         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
-             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
-             
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
-             <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
-             <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
-             
-             <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
-             <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
-             <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
-             
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
-             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-30s0 hover:bg-gray-800">Gallery</a>
-             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
-             
-             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
-             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+        
+        <!-- Mobile menu: Copied from about.html, with "Fundraising" link added -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
+            <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
+            <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
+            <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
+            <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
+            <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
+            <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
+            <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
+            <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
+            
+            <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
+            <a href="fundraising.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            
+            <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
     </header>
 
