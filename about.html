@@ -79,6 +79,18 @@
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
         .timeline-line::before { content: ''; position: absolute; left: 4px; top: 0; bottom: 0; width: 2px; background-color: rgba(255, 255, 255, 0.1); }
         .timeline-dot::before { content: ''; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; border: 2px solid #0c0c0c; }
+        /* Watermark style */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Adjust size as needed */
+            height: auto;
+            opacity: 0.05; /* Semi-transparent */
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+            z-index: -1; /* Place it behind text content */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -138,7 +150,7 @@
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
                     <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraising.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -162,7 +174,7 @@
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
             <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraising.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -175,9 +187,14 @@
             </div>
             <!-- Text Content Container -->
             <div class="hero-content container mx-auto px-6">
-                <h1 class="text-5xl md:text-8xl font-black uppercase hero-title-gradient tracking-tighter">About SolarMobil</h1>
-                <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">MAHE's official student Solar Vehicle Team, established in 2011. We design, build, and race solar-electric vehicles for global competitions, pushing the boundaries of sustainable transportation.</p>
-            </div>
+  <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter">
+    About <span class="text-green-400">SolarMobil</span>
+  </h1>
+  <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
+    MAHE's official student Solar Vehicle Team, established in 2011. We design, build, and race solar-electric vehicles for global competitions, pushing the boundaries of sustainable transportation.
+  </p>
+</div>
+
         </section>
         <section class="py-20 md:py-32">
             <div class="container mx-auto px-6">
@@ -220,61 +237,67 @@
                 <div class="max-w-3xl mx-auto mt-16 relative timeline-line space-y-12">
                      <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2011</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Foundation</h3>
+                         <p class="text-sm font-semibold text-white">2011</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">Foundation</h3>
                         <p class="text-gray-500 mt-1">SolarMobil established at MIT, Manipal. Initial team formation and planning.</p>
                      </div>
                       <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2013</p>
-                        <h3 class="text-xl font-bold text-white mt-1">FREYR-1</h3>
+                         <p class="text-sm font-semibold text-white">2013</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">FREYR-1</h3>
                         <p class="text-gray-500 mt-1">First prototype, a single-seater adventure class vehicle, completed.</p>
                      </div>
                      <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2015</p>
-                        <h3 class="text-xl font-bold text-white mt-1">SERVe</h3>
+                         <p class="text-sm font-semibold text-white">2015</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">SERVe</h3>
                         <p class="text-gray-500 mt-1">Launched India's first passenger solar electric vehicle prototype. Won QuEST Ingenium.</p>
                      </div>
                      <!-- Timeline Item -->
                       <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2016</p>
-                        <h3 class="text-xl font-bold text-white mt-1">SM S-1</h3>
+                         <p class="text-sm font-semibold text-white">2016</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">SM S-1</h3>
                         <p class="text-gray-500 mt-1">Developed India's first four-seater family solar passenger car.</p>
                      </div>
                       <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2018</p>
-                        <h3 class="text-xl font-bold text-white mt-1">SM S-2</h3>
+                         <p class="text-sm font-semibold text-white">2018</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">SM S-2</h3>
                         <p class="text-gray-500 mt-1">Launched a two-seater cruiser class car aimed at the World Solar Challenge.</p>
                      </div>
                      <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2023</p>
-                        <h3 class="text-xl font-bold text-white mt-1">ZENITH</h3>
+                         <p class="text-sm font-semibold text-white">2023</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">ZENITH</h3>
                         <p class="text-gray-500 mt-1">Competed in ESVC 2023 with a new bullet-design car featuring composite materials.</p>
                      </div>
                        <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2024</p>
-                        <h3 class="text-xl font-bold text-white mt-1">HELIARK</h3>
+                         <p class="text-sm font-semibold text-white">2024</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">HELIARK</h3>
                         <p class="text-gray-500 mt-1">Our latest generation vehicle, representing the pinnacle of our engineering efforts to date.</p>
                      </div>
                      <!-- Timeline Item -->
                      <div class="relative pl-8 zoom-in-section timeline-dot">
-                         <p class="text-sm font-semibold text-gray-400">2026</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Future Goals</h3>
+                         <p class="text-sm font-semibold text-white">2026</p>
+                        <h3 class="text-xl font-bold text-green-400 mt-1">Future Goals</h3>
                         <p class="text-gray-500 mt-1">Currently developing our 7th generation vehicle for the Bridgestone World Solar Challenge 2027.</p>
                      </div>
                 </div>
             </div>
          </section>
 
-        <section class="contact-section py-16">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+        <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                 <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <!-- --- MODIFICATION: Added relative positioning and z-index to grid container --- -->
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
                 <div>
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <p class="text-gray-400 text-base leading-relaxed"> 
                         Techshila, Workshop 07, Opp. Recreation Center<br>
                         Manipal Institute of Technology, Manipal,<br>
                         Udupi, Karnataka - 576 104.
@@ -282,10 +305,10 @@
                 </div>
                  <div class="text-left md:text-right">
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
-                     <p class="text-gray-400 text-sm mb-1">
-                        Varun Jayram (Team Manager): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     <p class="text-gray-400 text-base mb-1"> 
+                          Varun Jayram (Team Manager): <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
                      </p>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-base"> 
                         Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
                     </p>
                 </div>

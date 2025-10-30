@@ -47,7 +47,18 @@
         }
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
+        .cta-button { transition: all 0.3s ease; display: inline-block; padding: 12px 28px; background-color: #fff; color: #111; border-radius: 999px; font-weight: 600; text-decoration: none; }
+        .cta-button:hover { background-color: #d1d1d1; }
 
+        .cta-button-green {
+            background-color: #4ade80; /* Tailwind green-400 */
+            color: #0c0c0c; /* Dark text */
+        }
+        .cta-button-green:hover {
+            background-color: #22c55e; /* Tailwind green-500 */
+        }
+        .cta-button-secondary { background-color: rgba(255,255,255,0.1); color: #fff; }
+        .cta-button-secondary:hover { background-color: rgba(255,255,255,0.2); }
         /* Dropdown Menu Styles */
         .dropdown {
             position: relative;
@@ -118,6 +129,18 @@
             position: relative; /* Lifts this content into the stacking order */
             z-index: 3; /* Places it on top of the image and overlay */
         }
+        /* Watermark style */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Adjust size as needed */
+            height: auto;
+            opacity: 0.05; /* Semi-transparent */
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+            z-index: -1; /* Place it behind text content */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -178,7 +201,7 @@
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
                     <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraising.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -202,7 +225,7 @@
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
             <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraising.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -215,10 +238,10 @@
                 <img src="media.png" alt="SolarMobil Team Background" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/1a1a1a/0c0c0c?text=Gallery+Background'">
                 <div class="hero-overlay"></div>
             </div>
-            <div class="container mx-auto px-6 hero-text-content">
-                <h1 class="text-5xl md:text-8xl font-black uppercase hero-title-gradient tracking-tighter">
-                    Newsletter
-                </h1>
+
+            <div class="hero-text-content container mx-auto px-6">
+                <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter"><span class="text-green-400">Newsletter</span>
+  </h1>
                 <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
                     Stay up-to-date with our latest news, project milestones, and behind-the-scenes stories.
                 </p>
@@ -233,27 +256,33 @@
                     Our newsletter is currently under development. Check back soon to subscribe to updates from the SolarMobil team!
                 </p>
                  <div class="mt-10">
-                    <a href="index.html" class="inline-block px-8 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Back to Home</a>
+                    <a href="index.html" class="cta-button cta-button-green mt-8">Back to Home</a>
                 </div>
             </div>
         </section>
 
-        <section class="contact-section py-16">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+        <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                 <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <!-- --- MODIFICATION: Added relative positioning and z-index to grid container --- -->
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
                 <div>
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Techshila, Workshop 07, Opp. Recreation Center,<br>
+                    <p class="text-gray-400 text-base leading-relaxed"> 
+                        Techshila, Workshop 07, Opp. Recreation Center<br>
                         Manipal Institute of Technology, Manipal,<br>
                         Udupi, Karnataka - 576 104.
                     </p>
                 </div>
                  <div class="text-left md:text-right">
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
-                     <p class="text-gray-400 text-sm mb-1">
-                        Varun Jayram (Team Leader): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     <p class="text-gray-400 text-base mb-1"> 
+                          Varun Jayram (Team Manager): <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
                      </p>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-base"> 
                         Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
                     </p>
                 </div>

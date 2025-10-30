@@ -125,6 +125,17 @@
         
         .cta-button { transition: all 0.3s ease; display: inline-block; padding: 12px 28px; background-color: #fff; color: #111; border-radius: 999px; font-weight: 600; text-decoration: none; }
         .cta-button:hover { background-color: #d1d1d1; }
+        
+        /* --- ADDED FOR GREEN BUTTON --- */
+        .cta-button-green {
+            background-color: #4ade80; /* Tailwind green-400 */
+            color: #0c0c0c; /* Dark text */
+        }
+        .cta-button-green:hover {
+            background-color: #22c55e; /* Tailwind green-500 */
+        }
+        /* --- END GREEN BUTTON --- */
+
         .cta-button-secondary { background-color: rgba(255,255,255,0.1); color: #fff; }
         .cta-button-secondary:hover { background-color: rgba(255,255,255,0.2); }
 
@@ -138,29 +149,31 @@
         /* --- SHARED SLIDER STYLES --- */
         .slider-container {
             position: relative;
-            overflow: hidden;
-            padding: 2rem 0; /* Add padding for the scaled-down slides */
+            overflow: hidden; 
         }
         .slider-track {
             display: flex;
-            align-items: center; /* Vertically center slides */
+            align-items: stretch; 
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-left: 5%; 
+            padding-right: 5%; 
+            box-sizing: content-box; 
         }
         .slide {
-            flex-shrink: 0; /* Prevent shrinking */
-            min-width: 0; /* Prevent flexbox overflow */
-            margin: 0 1.5rem; /* Spacing between slides */
-            opacity: 0.5;
-            transform: scale(0.85); /* Non-active slides are smaller */
+            flex-shrink: 0; 
+            min-width: 0; 
+            margin: 0 0.75rem; 
+            opacity: 0.6; 
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            border-radius: 1rem; /* rounded-2xl */
+            border-radius: 1rem; 
             overflow: hidden;
-            background-color: #1a1a1a; /* Base bg for image load */
+            background-color: #1a1a1a; 
+            height: auto; 
         }
         .slide.is-active {
             opacity: 1;
-            transform: scale(1); /* Active slide is full size */
+            transform: scale(1); 
             z-index: 10;
         }
         .slide-content {
@@ -168,7 +181,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2rem; /* p-8 */
+            padding: 1.5rem; 
             z-index: 5;
         }
         .slide img.slide-bg {
@@ -179,89 +192,135 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-            transition: transform 0.6s ease; /* Added transition for zoom */
+            transition: transform 0.6s ease;
         }
         .slide:hover img.slide-bg {
              transform: scale(1.05);
         }
-        .slide .overlay {
+        .slide .overlay { 
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0) 60%); /* Bottom-up gradient */
+            inset: 0; 
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0) 75%);
             z-index: 2;
+        }
+        
+        /* --- CORRECTED Arrow Styles --- */
+        .slider-controls { /* Styles for the container div */
+             position: relative; /* Needed for absolute positioning of arrows */
+             width: 100%;
+             margin-top: 1rem; /* Space above arrows */
+             height: 50px; /* Give it enough height to contain arrows */
         }
         .slider-arrow {
             position: absolute;
-            top: 50%;
+            top: 50%; /* Position arrows vertically centered within .slider-controls */
             transform: translateY(-50%);
             z-index: 20;
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            border-radius: 999px;
-            padding: 0.75rem; /* p-3 */
-            transition: all 0.3s ease;
-            cursor: pointer; /* Ensure cursor changes */
-            border: none; /* Remove default button border */
+            background: none; 
+            color: #6b7280; 
+            border-radius: 0;
+            padding: 0.5rem; 
+            transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            cursor: pointer; 
+            border: 1px solid #4b5563; 
+            width: 40px; 
+            height: 40px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .slider-arrow:hover {
-            background-color: rgba(34, 197, 94, 0.7); /* green-500 */
+            color: #ffffff; 
+            background-color: rgba(255, 255, 255, 0.1); 
+            border-color: #6b7280;
         }
-        .slider-arrow.prev { left: 1rem; }
-        .slider-arrow.next { right: 1rem; }
-        /* --- END SHARED SLIDER STYLES --- */
+        .slider-arrow.prev { 
+             /* Center arrows horizontally using calc */
+            left: calc(50% - 20px - 10px); /* 50% - half arrow width - gap */
+        } 
+        .slider-arrow.next { 
+             left: calc(50% + 10px); /* 50% + gap */
+        }
+        /* Removed the ::before pseudo-element rule */
+        /* --- END CORRECTED Arrow Styles --- */
+
 
         /* --- UPDATES SLIDER SPECIFIC STYLES --- */
         #updates-slider-container .slide {
-            flex-basis: 70%; /* Active slide width */
-            height: 450px; /* Fixed height for all slides */
+            flex-basis: 60%; /* Adjusted basis */
+            min-height: 450px; /* Use min-height if needed */
         }
+         #updates-slider-container .slide.is-active {
+             flex-basis: 70%; /* Active slightly larger */
+         }
+        /* --- Add margin below update slider controls to separate from nav buttons --- */
+        #updates-slider-container .slider-controls {
+             margin-bottom: 1rem; /* Add space below arrows, before nav */
+        } 
         .update-nav-button {
             background: none;
             border: none;
             padding: 0.5rem 0.25rem;
-            color: #6b7280; /* gray-500 */
+            color: #6b7280; 
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             border-bottom: 2px solid transparent;
         }
         .update-nav-button:hover {
-            color: #e0e0e0; /* gray-200 */
+            color: #e0e0e0; 
         }
         .update-nav-button.is-active {
-            color: #ffffff; /* white */
-            border-bottom-color: #22c55e; /* green-500 */
+            color: #ffffff; 
+            border-bottom-color: #22c55e; 
         }
         /* --- END UPDATES SLIDER SPECIFIC STYLES --- */
 
         /* --- BLOG SLIDER SPECIFIC STYLES --- */
         #blog-slider-container .slide {
-             flex-basis: 50%; /* Make blog slides a bit smaller */
-             height: 400px; /* Adjust height */
-             /* Inherits margin, opacity, transform etc. from .slide */
+             flex-basis: 30%; 
+             aspect-ratio: 4 / 3; 
+             height: auto; 
         }
-        /* Adjust active blog slide size if needed */
         #blog-slider-container .slide.is-active {
-             flex-basis: 60%; /* Slightly larger active slide */
+             flex-basis: 40%; 
         }
-        .blog-tile-content { /* Renamed from slide-content */
+        .blog-tile-content { 
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 1.5rem; /* p-6 */
-            z-index: 5; /* Ensure it's above overlay */
+            padding: 1rem; 
+            z-index: 5; 
+            transition: opacity 0.3s ease-in-out; 
         }
-        .blog-tile-overlay { /* Keep the specific overlay */
+        #blog-slider-container .slide:hover .blog-tile-content {
+            opacity: 0;
+        }
+        .blog-tile-overlay { 
              position: absolute;
              inset: 0;
              background: linear-gradient(to top, rgba(0,0,0,0.85) 15%, rgba(0,0,0,0) 70%);
-             z-index: 2; /* Below content */
+             z-index: 2; 
         }
+         /* Adjust arrow wrapper bottom margin for blog slider */
+         #blog-slider-container .slider-controls {
+             margin-bottom: 2rem; 
+         }
         /* --- END BLOG SLIDER SPECIFIC STYLES --- */
+
+        /* Watermark style */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Adjust size as needed */
+            height: auto;
+            opacity: 0.05; /* Semi-transparent */
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+            z-index: -1; /* Place it behind text content */
+        }
 
     </style>
 </head>
@@ -274,13 +333,15 @@
         <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
     </div>
 
-    <header id="header" class="fixed top-0 left-0 right-0 z-40 bg-black/30 backdrop-blur-lg">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
+                
                 <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
-                    <!-- Projects Dropdown -->
+                    
+                    
                     <li class="dropdown">
                         <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Projects
@@ -293,6 +354,8 @@
                     </li>
                     
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
+                    
+                    
                     <li class="dropdown">
                         <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Team
@@ -303,6 +366,8 @@
                             <a href="alumni.html" class="dropdown-item">Alumni</a>
                         </div>
                     </li>
+
+                    
                     <li class="dropdown">
                         <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
@@ -313,32 +378,41 @@
                             <a href="newsletter.html" class="dropdown-item">Newsletter</a>
                         </div>
                     </li>
+                    
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
+                    
+                     <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
                 <button id="mobile-menu-button" class="md:hidden text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
             </nav>
         </div>
-         <!-- Mobile menu remains unchanged -->
+        
+        
         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
-             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
-             <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
-             <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
-             <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
-             <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
-             <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
-             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
-             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
-             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
-             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
-             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+            <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
+            <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
+            <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
+            <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
+            <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
+            <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
+            <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
+            <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
+            
+            
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            
+            <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
+        
         <section class="hero-section">
             <div id="hero-video-container" class="hero-video-container">
                  <video id="hero-video" loop muted playsinline class="hero-video" preload="auto">
@@ -349,42 +423,42 @@
             </div>
             <div class="relative z-10 container mx-auto px-6 w-full">
                  <div id="hero-primary-text" class="hero-text-container">
-                     <h1 class="text-5xl md:text-8xl font-bold uppercase hero-title-gradient tracking-tighter">
-                         Solar Racing Team<br>
-                         MIT, Manipal
-                     </h1>
-                     <p class="max-w-2xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
-                         Powered by the sun. Driven by innovation.
-                     </p>
-                     <div class="mt-10">
-                          <a href="projects.html" class="cta-button">Explore Our Cars</a>
-                     </div>
+                      <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter">
+                           <span class="hero-title-gradient">Solar Racing Team</span><br>
+                           <span class="text-white">MIT, Manipal</span>
+                      </h1>
+                      <p class="max-w-2xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
+                           Powered by the sun. Driven by innovation.
+                      </p>
+                      <div class="mt-10">
+                           <a href="projects.html" class="cta-button cta-button-green">Explore Our Cars</a>
+                      </div>
                  </div>
                  <div id="hero-secondary-text" class="hero-text-container">
-                      <h1 class="text-5xl md:text-8xl font-bold uppercase hero-title-gradient tracking-tighter" style="font-family: 'Exo 2', sans-serif;">
-                          Imagineering The Future
-                     </h1>
+                      <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter" style="font-family: 'Exo 2', sans-serif;">
+                          <span class="hero-title-gradient">Imagineering The </span><span class="text-green-500">Future</span>
+                      </h1>
                  </div>
             </div>
         </section>
 
 
-        <!-- --- REBUILT LATEST UPDATES SECTION --- -->
+        
         <section id="latest-updates" class="py-20 md:py-32 zoom-in-section">
             <div class="container mx-auto px-6">
-                <!-- Section Title -->
-                <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 max-w-3xl mx-auto text-center">Latest Updates</h2>
+                
+                <h2 class="text-3xl md:text-5xl font-bold text-green-400 mt-4 max-w-3xl mx-auto text-center">Latest Updates</h2>
                 <p class="max-w-2xl mx-auto mt-6 text-gray-400 text-center">
                     See what we've been working on, from new innovations to team events.
                 </p>
 
-                <!-- Carousel Container -->
+                
                 <div id="updates-slider-container" class="slider-container relative mt-16 w-full max-w-7xl mx-auto">
                     
-                    <!-- Slider Track -->
+                    
                     <div id="updates-track" class="slider-track relative w-full h-full rounded-2xl">
                         
-                        <!-- Slide 1 -->
+                        
                         <div class="slide is-active" data-slide-index="0">
                             <img src="heliark.jpeg" alt="HELIARK" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=HELIARK'">
                             <div class="overlay"></div>
@@ -392,62 +466,61 @@
                                 <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Projects</span>
                                 <h3 class="text-3xl md:text-4xl font-bold text-white mt-3">HELIARK Unveiled</h3>
                                 <p class="text-gray-300 mt-2 text-base max-w-lg">Our latest cruiser class vehicle, setting new standards in efficiency and design.</p>
-                                <a href="projects.html#heliark" class="text-white font-medium mt-4 inline-block w-auto">Read More →</a>
+                                <a href="projects.html#heliark" class="text-green-400 font-medium mt-4 inline-block w-auto">Read More →</a>
                             </div>
                         </div>
 
-                        <!-- Slide 2 -->
+                        
                         <div class="slide" data-slide-index="1">
-                            <img src="team_photo.jpg" alt="Team Recruitment" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=Team+Recruitment'">
+                            <img src="recruitment.jpg" alt="Team Recruitment" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=Team+Recruitment'">
                             <div class="overlay"></div>
                             <div class="slide-content">
                                 <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Team</span>
                                 <h3 class="text-3xl md:text-4xl font-bold text-white mt-3">We're Recruiting!</h3>
                                 <p class="text-gray-300 mt-2 text-base max-w-lg">Passionate about engineering and sustainability? Join our mission to build the future.</p>
-                                <a href="contact.html" class="text-white font-medium mt-4 inline-block w-auto">Join Us →</a>
+                                <a href="contact.html" class="text-green-400 font-medium mt-4 inline-block w-auto">Join Us →</a>
                             </div>
                         </div>
 
-                        <!-- Slide 3 -->
+                        
                         <div class="slide" data-slide-index="2">
-                            <img src="sponsor_logo.png" alt="New Sponsor" class="slide-bg object-contain p-16" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=New+Sponsor'">
+                            <img src="best.jpg" alt="New Sponsor" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=New+Sponsor'">
                             <div class="overlay"></div>
                             <div class="slide-content">
                                 <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Sponsors</span>
                                 <h3 class="text-3xl md:text-4xl font-bold text-white mt-3">Welcome, New Partner!</h3>
                                 <p class="text-gray-300 mt-2 text-base max-w-lg">We are thrilled to welcome our new platinum sponsor. Together, we'll drive innovation.</p>
-                                <a href="sponsors.html" class="text-white font-medium mt-4 inline-block w-auto">See Our Sponsors →</a>
+                                <a href="sponsors.html" class="text-green-400 font-medium mt-4 inline-block w-auto">See Our Sponsors →</a>
                             </div>
                         </div>
                         
-                        <!-- Slide 4 -->
+                        
                         <div class="slide" data-slide-index="3">
-                            <img src="zenith.jpg" alt="ZENITH in action" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=ZENITH+Gallery'">
+                            <img src="8.jpg" alt="ZENITH in action" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/1024x500/1a1a1a/e0e0e0?text=ZENITH+Gallery'">
                             <div class="overlay"></div>
                             <div class="slide-content">
                                 <span class="text-sm font-bold text-green-400 uppercase tracking-widest">Media</span>
                                 <h3 class="text-3xl md:text-4xl font-bold text-white mt-3">New Gallery Photos</h3>
                                 <p class="text-gray-300 mt-2 text-base max-w-lg">Check out the latest photos from our test drives and workshop sessions.</p>
-                                <a href="gallery.html" class="text-white font-medium mt-4 inline-block w-auto">View Gallery →</a>
+                                <a href="gallery.html" class="text-green-400 font-medium mt-4 inline-block w-auto">View Gallery →</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Navigation Arrows -->
-                    <button id="prev-update" class="slider-arrow prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button id="next-update" class="slider-arrow next">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
+                    
+                    <div class="slider-controls relative w-full mt-4 h-16"> 
+                        <button id="prev-update" class="slider-arrow prev">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /> </svg>
+                        </button>
+                        <button id="next-update" class="slider-arrow next">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /> </svg>
+                        </button>
+                    </div>
+
                 </div>
 
-                <!-- Slide Navigation Tiles -->
-                <div id="updates-nav" class="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-12">
+                
+                <div id="updates-nav" class="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-8"> 
                     <button class="update-nav-button is-active" data-slide-target="0">
                         <span class="text-sm font-bold uppercase tracking-widest">HELIARK</span>
                     </button>
@@ -463,72 +536,69 @@
                 </div>
             </div>
         </section>
-        <!-- --- END NEW LATEST UPDATES SECTION --- -->
-
         
-        <!-- --- UPDATED BLOG TILE SECTION TO SLIDER --- -->
-         <section id="insights-stories" class="py-20 md:py-32 bg-black/20 zoom-in-section">
+        <section id="insights-stories" class="py-20 md:py-32 bg-black/20 zoom-in-section">
              <div class="container mx-auto px-6">
                  <div class="text-center mb-16">
-                     <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Blog</p>
-                     <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 max-w-3xl mx-auto">Insights & Stories</h2>
+                     <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Posts</p> 
+                     <h2 class="text-3xl md:text-5xl font-bold text-green-400 mt-4 max-w-3xl mx-auto">Insights & Stories</h2>
                      <p class="max-w-2xl mx-auto mt-6 text-gray-400">
                          Explore our latest articles, team experiences, and technical deep-dives.
                      </p>
                  </div>
 
-                 <!-- NEW: Blog Slider Container -->
+                 
                  <div id="blog-slider-container" class="slider-container relative mt-16 w-full max-w-7xl mx-auto">
-                     <!-- Slider Track -->
-                     <div id="blog-track" class="slider-track relative w-full h-full rounded-2xl">
-                         <!-- Tile 1 -->
-                         <div class="slide is-active" data-slide-index="0"> <!-- Changed class to slide -->
-                             <img src="blog_image_1.jpg" alt="Engineering Challenge" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+1'">
+                     
+                     <div id="blog-track" class="slider-track relative w-full h-full"> 
+                         
+                         <div class="slide is-active" data-slide-index="0"> 
+                             <img src="1.1.jpg" alt="Engineering Challenge" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+1'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Engineering</span>
                                  <h3 class="text-xl font-bold text-white mt-2">Overcoming Aerodynamic Hurdles</h3>
                              </div>
                          </div>
-                         <!-- Tile 2 -->
-                         <div class="slide" data-slide-index="1"> <!-- Changed class to slide -->
-                             <img src="blog_image_2.jpg" alt="Team Collaboration" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+2'">
+                         
+                         <div class="slide" data-slide-index="1"> 
+                             <img src="IMG_3653.jpg" alt="Team Collaboration" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+2'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Team Life</span>
                                  <h3 class="text-xl font-bold text-white mt-2">Late Nights & Breakthroughs</h3>
                              </div>
                          </div>
-                         <!-- Tile 3 -->
-                         <div class="slide" data-slide-index="2"> <!-- Changed class to slide -->
-                             <img src="blog_image_3.jpg" alt="Solar Panel Technology" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+3'">
+                         
+                         <div class="slide" data-slide-index="2"> 
+                             <img src="solar cell.jpg" alt="Solar Panel Technology" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+3'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Technology</span>
                                  <h3 class="text-xl font-bold text-white mt-2">The Future of Solar Cells</h3>
                              </div>
                          </div>
-                         <!-- Tile 4 -->
-                         <div class="slide" data-slide-index="3"> <!-- Changed class to slide -->
-                             <img src="blog_image_4.jpg" alt="Race Day Preparation" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+4'">
+                         
+                         <div class="slide" data-slide-index="3"> 
+                             <img src="17.jpg" alt="Race Day Preparation" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+4'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Events</span>
                                  <h3 class="text-xl font-bold text-white mt-2">Gearing Up for the Challenge</h3>
                              </div>
                          </div>
-                         <!-- Tile 5 -->
-                         <div class="slide" data-slide-index="4"> <!-- Changed class to slide -->
-                             <img src="blog_image_5.jpg" alt="Battery Management System" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+5'">
+                         
+                         <div class="slide" data-slide-index="4"> 
+                             <img src="BMS2.jpg" alt="Battery Management System" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+5'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Electronics</span>
                                  <h3 class="text-xl font-bold text-white mt-2">Optimizing Power Delivery</h3>
                              </div>
                          </div>
-                         <!-- Tile 6 -->
-                         <div class="slide" data-slide-index="5"> <!-- Changed class to slide -->
-                             <img src="blog_image_6.jpg" alt="Community Outreach" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+6'">
+                         
+                         <div class="slide" data-slide-index="5"> 
+                             <img src="20.jpg" alt="Community Outreach" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+6'">
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Outreach</span>
@@ -537,50 +607,54 @@
                          </div>
                      </div>
                      
-                     <!-- Navigation Arrows -->
-                     <button id="prev-blog" class="slider-arrow prev">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                         </svg>
-                     </button>
-                     <button id="next-blog" class="slider-arrow next">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                         </svg>
-                     </button>
+                     
+                     <div class="slider-controls relative w-full mt-4 h-16 mb-8"> 
+                         <button id="prev-blog" class="slider-arrow prev">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /> </svg>
+                         </button>
+                         <button id="next-blog" class="slider-arrow next">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /> </svg>
+                         </button>
+                     </div>
+
                  </div>
                  
-                 <!-- Optional: Navigation dots (can be added later if needed) -->
-                 <!-- <div id="blog-nav-dots" class="flex justify-center items-center gap-2 mt-8"></div> -->
-
-             </div>
+                 
+                 </div>
          </section>
-        <!-- --- END UPDATED BLOG TILE SECTION --- -->
         
-        
-        <!-- Join/Sponsors Section -->
         <section class="py-20 md:py-32 zoom-in-section">
             <div class="container mx-auto px-6">
                 <div class="grid md:grid-cols-2 gap-8 text-center">
                     <div class="card rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold text-white">Join the Race</h3>
+                        <h3 class="text-2xl font-bold text-green-400">Join the Race</h3>
                         <p class="mt-2 text-gray-400">Ready to build the future? We're looking for passionate minds to join our team.</p>
-                        <a href="team.html" class="cta-button cta-button-secondary mt-6">Meet the Team</a>
-                    </div>
+                        
+                        <a href="team.html" class="cta-button cta-button-green mt-8">Meet the Team</a> 
+                        
+                        </div>
                     <div class="card rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold text-white">Our Supporters</h3>
+                        <h3 class="text-2xl font-bold text-green-400">Our Supporters</h3>
                         <p class="mt-2 text-gray-400">Our journey is fueled by visionary sponsors who believe in a sustainable future.</p>
-                        <a href="sponsors.html" class="cta-button cta-button-secondary mt-6">See Our Sponsors</a>
-                    </div>
+                        
+                        <a href="sponsors.html" class="cta-button cta-button-green mt-8">See Our Sponsors</a>
+                        
+                        </div>
                 </div>
             </div>
         </section>
 
-        <section class="contact-section py-16" style="background-color: #111111; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+        <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                 <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <!-- --- MODIFICATION: Added relative positioning and z-index to grid container --- -->
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
                 <div>
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <p class="text-gray-400 text-base leading-relaxed"> 
                         Techshila, Workshop 07, Opp. Recreation Center<br>
                         Manipal Institute of Technology, Manipal,<br>
                         Udupi, Karnataka - 576 104.
@@ -588,10 +662,10 @@
                 </div>
                  <div class="text-left md:text-right">
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
-                     <p class="text-gray-400 text-sm mb-1">
+                     <p class="text-gray-400 text-base mb-1"> 
                           Varun Jayram (Team Manager): <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
                      </p>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-base"> 
                         Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
                     </p>
                 </div>
@@ -606,7 +680,7 @@
                 <p>&copy; 2025 SolarMobil. All rights reserved.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                     <a href="https://www.linkedin.com/company/solarmobil-manipal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.5 2h-15A2.5 2.5 0 002 4.5v15A2.5 2.5 0 004.5 22h15a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0019.5 2zM8.5 18H5.5V9h3v9zm-1.5-10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18.5 18h-3v-4.25c0-1.02-.02-2.32-1.41-2.32-1.41 0-1.63 1.1-1.63 2.24V18h-3V9h2.88v1.32h.04c.4-.76 1.38-1.55 2.84-1.55 3.04 0 3.6 2 3.6 4.6V18z" clip-rule="evenodd" /></svg> </a>
-                    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.415 2.175 8.796 2.163 12 2.163zm0 1.441c-3.151 0-3.505.012-4.725.068-2.668.122-3.856 1.31-3.978 3.978-.056 1.22-.068 1.574-.068 4.725s.012 3.505.068 4.725c.122 2.668 1.31 3.856 3.978 3.978 1.22.056 1.574.068 4.725.068s3.505-.012 4.725-.068c2.668-.122 3.856-1.31 3.978-3.978.056-1.22.068-1.574-.068-4.725s-.012-3.505-.068-4.725c-.122-2.668-1.31-3.856-3.978-3.978C15.505 3.615 15.151 3.604 12 3.604zm0 10.395a4.25 4.25 0 100-8.5 4.25 4.25 0 000 8.5zm0-1.441a2.809 2.809 0 110-5.618 2.809 2.809 0 010 5.618zm4.332-6.52a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z"/></svg> </a>
+                    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664 4.771 4.919 4.919C8.415 2.175 8.796 2.163 12 2.163zm0 1.441c-3.151 0-3.505.012-4.725.068-2.668.122-3.856 1.31-3.978 3.978-.056 1.22-.068 1.574-.068 4.725s.012 3.505.068 4.725c.122 2.668 1.31 3.856 3.978 3.978 1.22.056 1.574.068 4.725.068s3.505-.012 4.725-.068c2.668-.122 3.856-1.31 3.978-3.978.056-1.22.068-1.574-.068-4.725s-.012-3.505-.068-4.725c-.122-2.668-1.31-3.856-3.978-3.978C15.505 3.615 15.151 3.604 12 3.604zm0 10.395a4.25 4.25 0 100-8.5 4.25 4.25 0 000 8.5zm0-1.441a2.809 2.809 0 110-5.618 2.809 2.809 0 010 5.618zm4.332-6.52a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z"/></svg> </a>
                     <a href="https://x.com/TeamSolarmobil" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="X (formerly Twitter)"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 7.184L18.901 1.153zm-1.65 19.54h2.6l-13.8-19.54H3.85l13.4 19.54z"/></svg> </a>
                     <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
                     <a href="https://www.facebook.com/SolarMobilMIT/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88V15.5H8.31v-3.5h2.13v-2.6c0-2.12 1.25-3.29 3.2-3.29.91 0 1.84.16 1.84.16v2.99h-1.5a1.23 1.23 0 00-1.39 1.33v1.51h3.33l-.53 3.5h-2.8v6.38A10.01 10.01 0 0022 12z" clip-rule="evenodd" /></svg> </a>
@@ -651,7 +725,7 @@
 
             const header = document.getElementById('header');
             const heroVideoContainer = document.getElementById('hero-video-container');
-            let headerHeight = header ? header.offsetHeight : 0; // Check if header exists
+            let headerHeight = header ? header.offsetHeight : 0; 
             
              // --- SHARED SLIDER LOGIC ---
              const setupSlider = (containerId, trackId, prevBtnId, nextBtnId, navContainerId = null) => {
@@ -663,39 +737,41 @@
 
                  if (!sliderContainer || !track || !prevButton || !nextButton) {
                     console.error("Slider elements not found for:", containerId);
-                    return; // Exit if essential elements are missing
+                    return; 
                  }
 
                  let currentSlideIndex = 0;
-                 let slides = Array.from(track.children);
+                 let slides = Array.from(track.children).filter(el => el.classList.contains('slide')); // Ensure we only select slides
                  let totalSlides = slides.length;
-                 let slideWidth = 0; // Will be calculated dynamically
                  let navButtons = navButtonsContainer ? navButtonsContainer.querySelectorAll('[data-slide-target]') : [];
 
                  const showSlide = (index, behavior = 'smooth') => {
-                     if (totalSlides === 0) return; // Prevent errors if no slides
-                     index = (index + totalSlides) % totalSlides; // Ensure index wraps around correctly
+                     if (totalSlides === 0) return; 
+                     index = (index + totalSlides) % totalSlides; 
 
                      const targetSlide = slides[index];
                      if (!targetSlide) return;
 
-                     slideWidth = targetSlide.offsetWidth; 
                      const containerWidth = sliderContainer.offsetWidth;
-                     const slideLeft = targetSlide.offsetLeft;
+                     const slideWidth = targetSlide.offsetWidth; 
+                     const slideLeft = targetSlide.offsetLeft; 
                      
+                     // Transform to center the target slide
                      const newTransform = (containerWidth / 2) - (slideLeft + (slideWidth / 2));
                      
                      track.style.transitionBehavior = behavior; 
                      track.style.transform = `translateX(${newTransform}px)`;
 
+                     // Update active classes for slides
                      slides.forEach((slide, i) => {
                          slide.classList.toggle('is-active', i === index);
                      });
 
+                     // Update active classes for nav buttons 
                      navButtons.forEach(button => {
-                        if (button.classList.contains('update-nav-button')) { // Only apply to update nav buttons
-                            button.classList.toggle('is-active', parseInt(button.getAttribute('data-slide-target')) === index);
-                        }
+                         if (button.classList.contains('update-nav-button')) { 
+                             button.classList.toggle('is-active', parseInt(button.getAttribute('data-slide-target')) === index);
+                         }
                      });
 
                      currentSlideIndex = index;
@@ -704,6 +780,7 @@
                  prevButton.addEventListener('click', () => showSlide(currentSlideIndex - 1));
                  nextButton.addEventListener('click', () => showSlide(currentSlideIndex + 1));
 
+                 // Add click listeners for nav buttons 
                  navButtons.forEach(button => {
                      button.addEventListener('click', () => {
                          const targetIndex = parseInt(button.getAttribute('data-slide-target'), 10);
@@ -714,19 +791,19 @@
                  // Recalculate on resize
                  window.addEventListener('resize', () => showSlide(currentSlideIndex, 'auto'));
 
-                 // Initial setup
-                 setTimeout(() => showSlide(0, 'auto'), 100); 
+                 // Initial setup 
+                 setTimeout(() => showSlide(0, 'auto'), 150); 
              };
              // --- END SHARED SLIDER LOGIC ---
 
 
              window.addEventListener('resize', () => {
-                 if (header) { // Check if header exists
-                    headerHeight = header.offsetHeight;
+                 if (header) { 
+                     headerHeight = header.offsetHeight;
                  }
                  handleScroll();
-                 // Slider recalculation is now handled within setupSlider's resize listener
-            });
+                 // Slider recalculation is handled within setupSlider's resize listener
+             });
 
 
             function handleScroll() {
@@ -799,7 +876,7 @@
 
             // --- Initialize Sliders ---
             setupSlider('updates-slider-container', 'updates-track', 'prev-update', 'next-update', 'updates-nav');
-            setupSlider('blog-slider-container', 'blog-track', 'prev-blog', 'next-blog'); // No nav buttons for blog slider
+            setupSlider('blog-slider-container', 'blog-track', 'prev-blog', 'next-blog'); 
             // --- END Initialize Sliders ---
         });
     </script>

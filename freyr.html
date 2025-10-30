@@ -98,6 +98,18 @@
             height: 300px;
             object-fit: cover;
         }
+        /* Watermark style */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Adjust size as needed */
+            height: auto;
+            opacity: 0.05; /* Semi-transparent */
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+            z-index: -1; /* Place it behind text content */
+        }
 
     </style>
 </head>
@@ -159,7 +171,7 @@
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
                     <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraising.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -183,7 +195,7 @@
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
             <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraising.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -261,43 +273,33 @@
                         </a>
                     </div>
 
-                    <!-- Gallery (Stacks Fifth) -->
-                    <div class="lg:col-span-2 zoom-in-section" style="transition-delay: 400ms;">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-left">Gallery</h2>
-                        <div class="gallery-grid">
-                            <div class="gallery-item">
-                                <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=FREYR+Side+Profile" alt="FREYR side profile on display in a workshop.">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=FREYR+Chassis" alt="The mild steel space frame chassis of FREYR during construction.">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=Team+with+FREYR" alt="The founding team members posing with the completed FREYR prototype.">
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-         <section class="contact-section py-16">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+         <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                 <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <!-- --- MODIFICATION: Added relative positioning and z-index to grid container --- -->
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
                 <div>
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Techshila, Workshop 07, Opp. Recreation Center,<br>
+                    <p class="text-gray-400 text-base leading-relaxed"> 
+                        Techshila, Workshop 07, Opp. Recreation Center<br>
                         Manipal Institute of Technology, Manipal,<br>
                         Udupi, Karnataka - 576 104.
                     </p>
                 </div>
                  <div class="text-left md:text-right">
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
-                     <p class="text-gray-400 text-sm mb-1">
-                        Varun Jayram (Team Manager): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     <p class="text-gray-400 text-base mb-1"> 
+                          Varun Jayram (Team Manager): <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
                      </p>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-base"> 
                         Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
                     </p>
                 </div>

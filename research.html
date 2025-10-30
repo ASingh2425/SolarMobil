@@ -47,13 +47,13 @@
         .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
         header { position: fixed; z-index: 50; left: 0; right: 0; top: 0; }
         main { padding-top: 80px; }
-        .contact-section { background-color: #111111; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .contact-section { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
         /* NEW Filterable Research List Styles */
         .filter-input {
             background-color: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #E0E0E0;
+            color: #302424;
             border-radius: 0.5rem; /* rounded-lg */
             padding: 0.75rem 1rem; /* py-3 px-4 */
             font-size: 0.875rem; /* text-sm */
@@ -103,6 +103,18 @@
         }
         .research-link:hover {
             opacity: 0.8;
+        }
+        /* Watermark style */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Adjust size as needed */
+            height: auto;
+            opacity: 0.05; /* Semi-transparent */
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+            z-index: -1; /* Place it behind text content */
         }
     </style>
 </head>
@@ -164,7 +176,7 @@
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
                     <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraising.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -188,7 +200,7 @@
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
             <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraising.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -204,14 +216,15 @@
                 background-size: cover;
                 background-position: center center;
             ">
-        <div class="container mx-auto px-6">
-                <h1 class="text-5xl md:text-8xl font-black uppercase hero-title-gradient tracking-tighter">
-                    Our Research
-                </h1>
-                <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
-                    Advancing solar technology through innovation. Explore our publications, patents, and the core ideas that drive us forward.
-                </p>
-            </div>
+
+        <div class="hero-content container mx-auto px-6">
+  <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter">
+    Our <span class="text-green-400">Research</span>
+  </h1>
+  <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
+    Advancing solar technology through innovation. Explore our publications, patents, and the core ideas that drive us forward.
+  </p>
+</div>
     </section>
 
         <!-- NEW Publications Section -->
@@ -262,11 +275,17 @@
         </section>
 
         <!-- Contact Section -->
-         <section class="contact-section py-16">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+         <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                 <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <!-- --- MODIFICATION: Added relative positioning and z-index to grid container --- -->
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
                 <div>
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <p class="text-gray-400 text-base leading-relaxed"> 
                         Techshila, Workshop 07, Opp. Recreation Center<br>
                         Manipal Institute of Technology, Manipal,<br>
                         Udupi, Karnataka - 576 104.
@@ -274,10 +293,10 @@
                 </div>
                  <div class="text-left md:text-right">
                     <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
-                     <p class="text-gray-400 text-sm mb-1">
-                         Varun Jayram (Team Manager): <a href="tel:+917208481971" class="hover:text-white">+91 7208481971</a>
+                     <p class="text-gray-400 text-base mb-1"> 
+                          Varun Jayram (Team Manager): <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
                      </p>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-base"> 
                         Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
                     </p>
                 </div>
