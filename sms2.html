@@ -33,6 +33,12 @@
         }
         .hero-title-gradient { background: -webkit-linear-gradient(45deg, #ffffff, #aaaaaa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         .hero-section { transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
+        .hero-overlay {position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(12, 12, 12, 0.6); /* 60% black overlay */z-index: 2; /* Sits on top of the image */ }
+
+        .hero-text-content { position: relative; /* Lifts this content into the stacking order */ z-index: 3; /* Places it on top of the image and overlay */ }
+        #sms2-hero-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%;z-index: 1; /* Places it at the bottom layer */}
+
+        #sms2-hero-image img { width: 100%; height: 100%; object-fit: cover; /* Scales the image to cover the entire section */ object-position: center; /* Centers the image */ }
         
         /* Dropdown Menu Styles */
         /* Dropdown Menu Styles */
@@ -50,7 +56,7 @@
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
         header { position: fixed; z-index: 50; left: 0; right: 0; top: 0; }
         main { padding-top: 80px; }
-        .contact-section { background-color: #111111; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .contact-section { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
         /* Spec Table Styles */
         .spec-table {
@@ -128,12 +134,10 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
-                <!-- Logo path from about.html -->
                 <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
                     
-                    <!-- Projects Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Projects
@@ -147,7 +151,6 @@
                     
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
                     
-                    <!-- Team Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Team
@@ -159,22 +162,24 @@
                         </div>
                     </li>
 
-                    <!-- Media Dropdown -->
+                    <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="media-dropdown" class="dropdown-menu">
                             <a href="gallery.html" class="dropdown-item">Gallery</a>
                             <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                            <!-- --- MODIFICATION: Added Blogs link --- -->
+                            <a href="blogs.html" class="dropdown-item">Blogs</a>
                         </div>
                     </li>
                     
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
-                    <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <!-- --- MODIFICATION: Removed active link --- -->
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -182,7 +187,7 @@
             </nav>
         </div>
         
-        <!-- Mobile menu: Copied from about.html, with "Fundraising" link added -->
+        <!-- --- Copied Mobile Menu, with MODIFICATIONS --- -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
@@ -195,10 +200,12 @@
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <!-- --- MODIFICATION: Added Blogs link with active styles --- -->
+            <a href="blogs.html" class="block py-2 px-8 text-sm text-white bg-gray-800/50">Blogs</a>
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
-            <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <!-- --- MODIFICATION: Removed active styles --- -->
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -206,16 +213,19 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero-section pt-48 pb-32 text-center" style="background: radial-gradient(circle, #1a1a1a 0%, #0c0c0c 80%);">
-            <div class="container mx-auto px-6">
-                <h1 class="text-5xl md:text-8xl font-black uppercase hero-title-gradient tracking-tighter">
-                    SM S-2
-                </h1>
-                <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
-                    Cruiser Class Vehicle
-                </p>
-            </div>
-        </section>
+         <section id="sms2-hero" class="hero-section pt-48 pb-32 text-center" style="position: relative;">
+            <div id="sms2-hero-image">
+ <img src="sms2.jpg" alt="SolarMobil Team Background" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/1a1a1a/0c0c0c?text=Gallery+Background'">
+<div class="hero-overlay"></div></div>
+<div class="container mx-auto px-6 hero-text-content">
+<h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter">
+<span class="text-green-400">SMS-2</span>
+  </h1>
+ <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
+ Cruiser Class Vehicle
+ </p>
+</div>
+ </section>
 
         <!-- Main Content Section -->
         <section class="py-20 md:py-32">
@@ -224,7 +234,7 @@
                     
                     <!-- Main Image (Stacks First) -->
                     <div class="lg:col-span-2 w-full h-96 bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 zoom-in-section">
-                        <img src="sms2.jpg" alt="SolarMobil's SM S-2 solar car, a sleek, blue, two-seater cruiser class vehicle designed for endurance racing." class="w-full h-full object-cover">
+                        <img src="sms22.jpg" alt="SolarMobil's SM S-2 solar car, a sleek, blue, two-seater cruiser class vehicle designed for endurance racing." class="w-full h-full object-cover">
                     </div>
 
                     <!-- Right Column (Sticky Specs) -->

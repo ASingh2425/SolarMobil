@@ -43,7 +43,29 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             overflow: hidden; /* To contain image */
+            /* --- MODIFICATION: Added width for flexbox sizing --- */
+            width: 100%;
+            max-width: 350px; /* Max card width */
         }
+        
+        /* --- MODIFICATION: Added .flex-card-wrapper to scope the responsive width rules --- */
+        @media (min-width: 768px) { /* md */
+            .flex-card-wrapper .team-card {
+                 width: calc(50% - 1rem); /* 2 cards per row, accounting for gap-8 (2rem) / 2 */
+            }
+        }
+         @media (min-width: 1024px) { /* lg */
+             /* This class will be used for 4-column layouts */
+            .lg\:w-4-col .team-card {
+                 width: calc(25% - 1.5rem); /* 4 cards per row, accounting for gap-8 (2rem) * 3/4 */
+            }
+            /* This class will be used for 3-column layouts */
+            .lg\:w-3-col .team-card {
+                 width: calc(33.33% - 1.34rem); /* 3 cards per row */
+            }
+        }
+
+
         .team-card:hover {
             transform: translateY(-8px) scale(1.03);
             border-color: rgba(74, 222, 128, 0.5);
@@ -122,12 +144,10 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
-                <!-- Logo path from about.html -->
                 <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
                     
-                    <!-- Projects Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Projects
@@ -141,7 +161,6 @@
                     
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
                     
-                    <!-- Team Dropdown -->
                     <li class="dropdown">
                         <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Team
@@ -153,22 +172,24 @@
                         </div>
                     </li>
 
-                    <!-- Media Dropdown -->
+                    <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="media-dropdown" class="dropdown-menu">
                             <a href="gallery.html" class="dropdown-item">Gallery</a>
                             <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                            <!-- --- MODIFICATION: Added Blogs link --- -->
+                            <a href="blogs.html" class="dropdown-item">Blogs</a>
                         </div>
                     </li>
                     
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
-                    <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-                    <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <!-- --- MODIFICATION: Removed active link --- -->
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -176,7 +197,7 @@
             </nav>
         </div>
         
-        <!-- Mobile menu: Copied from about.html, with "Fundraising" link added -->
+        <!-- --- Copied Mobile Menu, with MODIFICATIONS --- -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
@@ -189,10 +210,12 @@
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <!-- --- MODIFICATION: Added Blogs link with active styles --- -->
+            <a href="blogs.html" class="block py-2 px-8 text-sm text-white bg-gray-800/50">Blogs</a>
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
-            <!-- *** NEW FUNDRAISING LINK (ACTIVE) *** -->
-            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <!-- --- MODIFICATION: Removed active styles --- -->
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -220,11 +243,13 @@
         <!-- Leadership Section -->
         <section class="py-20 md:py-32">
             <div class="container mx-auto px-6">
-                <div class="text-left max-w-3xl mb-12 zoom-in-section">
-                    <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Leadership</p>
+                <!-- MODIFIED: Changed text-left to text-center and added mx-auto -->
+                <div class="text-center max-w-3xl mb-12 zoom-in-section mx-auto">
+                    <p class="text-sm font-bold text-green-400 uppercase tracking-widest">LEADERSHIP</p>
                     <h2 class="text-3xl md:text-5xl font-bold text-white mt-4">Driving the Vision Forward</h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 lg:w-3-col flex-card-wrapper">
                     <!-- Team Card: Vikram Rajesh -->
                     <div class="team-card zoom-in-section">
                         <img src="vikram.png" alt="Vikram Rajesh" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Vikram+R'">
@@ -271,14 +296,16 @@
         <!-- Subsystems Section -->
         <section class="py-20 md:py-32 bg-black/20">
             <div class="container mx-auto px-6">
-                <div class="text-left max-w-3xl mb-12 zoom-in-section">
-                    <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Subsystems</p>
-                    <h2 class="text-3xl md:text-5xl font-bold text-green-400 mt-4">The Core of the Car</h2>
+                <!-- MODIFIED: Changed text-left to text-center and added mx-auto -->
+                <div class="text-center max-w-3xl mb-12 zoom-in-section mx-auto">
+                    <p class="text-sm font-bold text-green-400 uppercase tracking-widest">SUBSYSTEMS</p>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mt-4">The Core of the Car</h2>
                 </div>
                 
                 <!-- Mechanical - Vehicle Dynamics -->
                 <h3 class="subsystem-heading zoom-in-section">Mechanical - Vehicle Dynamics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 mb-16 lg:w-4-col flex-card-wrapper">
                     <div class="team-card zoom-in-section"><img src="bedant.png" alt="Bedant Panda" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Bedant+P'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Bedant Panda</h3><p class="text-sm text-green-400 mt-1">Vehicle Dynamics Head</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 100ms;"><img src="rishi.jpg" alt="Rishi Ray" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Rishi+R'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Rishi Ray</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 200ms;"><img src="sriram.jpg" alt="Shriram V" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Shriram+V'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Shriram V</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
@@ -288,7 +315,8 @@
 
                 <!-- Mechanical - Structures & Aerodynamics -->
                 <h3 class="subsystem-heading zoom-in-section">Mechanical - Structures & Aerodynamics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 mb-16 lg:w-4-col flex-card-wrapper">
                     <div class="team-card zoom-in-section"><img src="nikhil.png" alt="Mangaluru Nikhil Krishna" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Nikhil+K'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Mangaluru Nikhil Krishna</h3><p class="text-sm text-green-400 mt-1">Structures & Aero Head</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 100ms;"><img src="shruti.jpg" alt="Sruti Irukulvajula" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Sruti+I'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Sruti Irukulvajula</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 200ms;"><img src="akshat.jpg" alt="Akshat Himmatramka" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Akshat+H'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Akshat Himmatramka</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
@@ -296,14 +324,16 @@
 
                  <!-- Electrical -->
                 <h3 class="subsystem-heading zoom-in-section">Electrical</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 mb-16 lg:w-4-col flex-card-wrapper">
                     <div class="team-card zoom-in-section"><img src="brandon.png" alt="Brandon Rich Khonglam" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Brandon+K'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Brandon Rich Khonglam</h3><p class="text-sm text-green-400 mt-1">Electrical Head</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 100ms;"><img src="priyanshu.jpg" alt="Priyanshu Singhal" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Priyanshu+S'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Priyanshu Singhal</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
                 </div>
 
                 <!-- Electronics -->
                 <h3 class="subsystem-heading zoom-in-section">Electronics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 mb-16 lg:w-4-col flex-card-wrapper">
                     <div class="team-card zoom-in-section"><img src="pulkit.png" alt="Pulkit Kumar" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Pulkit+K'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Pulkit Kumar</h3><p class="text-sm text-green-400 mt-1">Electronics Head</p></div></div>
                     <div class="team-card zoom-in-section"><img src="revathi.png" alt="Revathi S" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Revathi+S'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Revathi S</h3><p class="text-sm text-green-400 mt-1">Communication Systems Head</p></div></div>
                     <div class="team-card zoom-in-section"><img src="sahil.png" alt="Sahil Kumar" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Sahil+K'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Sahil Kumar</h3><p class="text-sm text-green-400 mt-1">DAQ Head</p></div></div>
@@ -314,7 +344,8 @@
 
                 <!-- Strategy -->
                 <h3 class="subsystem-heading zoom-in-section">Strategy</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- --- MODIFICATION: Added flex-card-wrapper class --- -->
+                <div class="flex flex-wrap justify-center gap-8 mb-16 lg:w-4-col flex-card-wrapper">
                     <div class="team-card zoom-in-section"><img src="achuth.png" alt="Achuth S Menon" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Achuth+M'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Achuth S Menon</h3><p class="text-sm text-green-400 mt-1">Strategy Head</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 100ms;"><img src="anvesha.jpg" alt="Anvesha Singh" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Anvesha+S'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Anvesha Singh</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
                     <div class="team-card zoom-in-section" style="transition-delay: 200ms;"><img src="aryan.jpg" alt="Aryan Prakash" class="team-card-image" onerror="this.src='https.phttps://placehold.co/400x300/1a1a1a/22c55e?text=Aryan+P'"><div class="team-card-content"><h3 class="font-bold text-white text-xl">Aryan Prakash</h3><p class="text-sm text-green-400 mt-1">Team Member</p></div></div>
@@ -322,15 +353,15 @@
                 </div>
 
                 <!-- Research & Management (Side-by-Side) -->
-                <!-- MODIFIED: Changed lg:grid-cols-2 to lg:grid-cols-4 -->
+                <!-- This grid setup is correct for centering two groups -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16 mb-16">
                     
-                    <!-- Column 1: Research -->
-                    <div>
+                    <!-- Column 1: Research (Starts in 2nd column on LG) -->
+                    <div class="lg:col-start-2">
                         <h3 class="subsystem-heading zoom-in-section">Research</h3>
-                        <!-- MODIFIED: Removed the inner grid wrapper -->
-                        <div class="team-card zoom-in-section">
-                            <img src="atreyi.png" alt="Atreyee Dey" class="team-card-image">
+                        <!-- *** NOTE: No flex-card-wrapper here, so it uses max-width: 350px *** -->
+                        <div class="team-card zoom-in-section mx-auto"> <!-- Added mx-auto to center card on sm screens -->
+                            <img src="atreyi.png" alt="Atreyee Dey" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Atreyee+D'">
                             <div class="team-card-content">
                                 <h3 class="font-bold text-white text-xl">Atreyee Dey</h3>
                                 <p class="text-sm text-green-400 mt-1">Research Head</p>
@@ -338,14 +369,12 @@
                         </div>
                     </div>
 
-                    <!-- Column 2: Management -->
-                    <!-- MODIFIED: Added lg:col-start-4 to push this to the extreme right on large screens -->
-                    <div class="lg:col-start-4">
+                    <!-- Column 2: Management (Starts in 3rd column on LG) -->
+                    <div class="lg:col-start-3">
                         <h3 class="subsystem-heading zoom-in-section">Management</h3>
-                        <!-- MODIFIED: Removed the inner grid wrapper -->
-                        <div class="team-card zoom-in-section">
-                            <!-- FIXED: Changed broken src to a valid placeholder -->
-                            <img src="ansh.png" alt="Ansh Sukthankar" class="team-card-image">
+                        <!-- *** NOTE: No flex-card-wrapper here, so it uses max-width: 350px *** -->
+                        <div class="team-card zoom-in-section mx-auto"> <!-- Added mx-auto to center card on sm screens -->
+                            <img src="ansh.png" alt="Ansh Sukthankar" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Ansh+S'">
                             <div class="team-card-content">
                                 <h3 class="font-bold text-white text-xl">Ansh Sukthankar</h3>
                                 <p class="text-sm text-green-400 mt-1">Management Head</p>
@@ -360,13 +389,17 @@
         <!-- Faculty Advisors Section -->
         <section class="py-20 md:py-32"> <!-- Removed bg-black/20 to alternate -->
             <div class="container mx-auto px-6">
-                <div class="text-left max-w-3xl mb-12 zoom-in-section">
+                <!-- MODIFIED: Changed text-left to text-center and added mx-auto -->
+                <div class="text-center max-w-3xl mb-12 zoom-in-section mx-auto">
                     <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Faculty Advisors</p>
                     <h2 class="text-3xl md:text-5xl font-bold text-white mt-4">Guiding Our Journey</h2>
                 </div>
+                <!-- --- MODIFICATION: Cleaned up grid for centering 2 cards --- -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Team Card: Dr. Vijay Babu Koreboina -->
-                    <div class="team-card zoom-in-section">
+                    <!-- Added lg:col-start-2 to start in the 2nd column on large screens -->
+                    <!-- *** NOTE: No flex-card-wrapper here, so it uses max-width: 350px *** -->
+                    <div class="team-card zoom-in-section mx-auto lg:col-start-2">
                         <img src="image_p1.jpg" alt="Dr. Vijay Babu Koreboina" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Dr.+Vijay+Babu+K'">
                         <div class="team-card-content">
                             <h3 class="font-bold text-white text-xl">Dr. Vijay Babu Koreboina</h3>
@@ -374,7 +407,9 @@
                         </div>
                     </div>
                     <!-- Team Card: Dr. Ravindra Mallya -->
-                    <div class="team-card zoom-in-section" style="transition-delay: 100ms;">
+                    <!-- This card will naturally fall into the 3rd column -->
+                    <!-- *** NOTE: No flex-card-wrapper here, so it uses max-width: 350px *** -->
+                    <div class="team-card zoom-in-section mx-auto" style="transition-delay: 100ms;">
                         <img src="image_p2.jpg" alt="Dr. Ravindra Mallya" class="team-card-image" onerror="this.src='https://placehold.co/400x300/1a1a1a/22c55e?text=Dr.+Ravindra+M'">
                         <div class="team-card-content">
                             <h3 class="font-bold text-white text-xl">Dr. Ravindra Mallya</h3>
@@ -387,7 +422,7 @@
 
          <!-- Contact Section -->
          <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
-             <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
+              <!-- --- MODIFICATION: Watermark moved outside the grid container --- -->
             <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
                  <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
             </div>
@@ -422,10 +457,10 @@
                 <p>&copy; 2025 SolarMobil. All rights reserved.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                      <a href="https://www.linkedin.com/company/solarmobil-manipal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.5 2h-15A2.5 2.5 0 002 4.5v15A2.5 2.5 0 004.5 22h15a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0019.5 2zM8.5 18H5.5V9h3v9zm-1.5-10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18.5 18h-3v-4.25c0-1.02-.02-2.32-1.41-2.32-1.41 0-1.63 1.1-1.63 2.24V18h-3V9h2.88v1.32h.04c.4-.76 1.38-1.55 2.84-1.55 3.04 0 3.6 2 3.6 4.6V18z" clip-rule="evenodd" /></svg> </a>
-                    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.415 2.175 8.796 2.163 12 2.163zm0 1.441c-3.151 0-3.505.012-4.725.068-2.668.122-3.856 1.31-3.978 3.978-.056 1.22-.068 1.574-.068 4.725s.012 3.505.068 4.725c.122 2.668 1.31 3.856 3.978 3.978 1.22.056 1.574.068 4.725.068s3.505-.012 4.725-.068c2.668-.122 3.856-1.31 3.978-3.978.056-1.22.068-1.574-.068-4.725s-.012-3.505-.068-4.725c-.122-2.668-1.31-3.856-3.978-3.978C15.505 3.615 15.151 3.604 12 3.604zm0 10.395a4.25 4.25 0 100-8.5 4.25 4.25 0 000 8.5zm0-1.441a2.809 2.809 0 110-5.618 2.809 2.809 0 010 5.618zm4.332-6.52a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z"/></svg> </a>
-                    <a href="https://x.com/TeamSolarmobil" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="X (formerly Twitter)"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 7.184L18.901 1.153zm-1.65 19.54h2.6l-13.8-19.54H3.85l13.4 19.54z"/></svg> </a>
-                    <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
-                    <a href="https://www.facebook.com/SolarMobilMIT/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88V15.5H8.31v-3.5h2.13v-2.6c0-2.12 1.25-3.29 3.2-3.29.91 0 1.84.16 1.84.16v2.99h-1.5a1.23 1.23 0 00-1.39 1.33v1.51h3.33l-.53 3.5h-2.8v6.38A10.01 10.01 0 0022 12z" clip-rule="evenodd" /></svg> </a>
+                     <a href="https://www.instagram.com/solarmobil_manipal/?hl=en" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664 4.771 4.919 4.919C8.415 2.175 8.796 2.163 12 2.163zm0 1.441c-3.151 0-3.505.012-4.725.068-2.668.122-3.856 1.31-3.978 3.978-.056 1.22-.068 1.574-.068 4.725s.012 3.505.068 4.725c.122 2.668 1.31 3.856 3.978 3.978 1.22.056 1.574.068 4.725.068s3.505-.012 4.725-.068c2.668-.122 3.856-1.31 3.978-3.978.056-1.22.068-1.574-.068-4.725s-.012-3.505-.068-4.725c-.122-2.668-1.31-3.856-3.978-3.978C15.505 3.615 15.151 3.604 12 3.604zm0 10.395a4.25 4.25 0 100-8.5 4.25 4.25 0 000 8.5zm0-1.441a2.809 2.809 0 110-5.618 2.809 2.809 0 010 5.618zm4.332-6.52a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z"/></svg> </a>
+                     <a href="https://x.com/TeamSolarmobil" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="X (formerly Twitter)"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 7.184L18.901 1.153zm-1.65 19.54h2.6l-13.8-19.54H3.85l13.4 19.54z"/></svg> </a>
+                     <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
+                     <a href="https://www.facebook.com/SolarMobilMIT/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88V15.5H8.31v-3.5h2.13v-2.6c0-2.12 1.25-3.29 3.2-3.29.91 0 1.84.16 1.84.16v2.99h-1.5a1.23 1.23 0 00-1.39 1.33v1.51h3.33l-.53 3.5h-2.8v6.38A10.01 10.01 0 0022 12z" clip-rule="evenodd" /></svg> </a>
                 </div>
             </div>
        </div>
@@ -518,3 +553,6 @@
     </script>
 </body>
 </html>
+
+
+

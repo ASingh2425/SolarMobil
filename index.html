@@ -35,6 +35,18 @@
         
         .marquee-row { flex-shrink: 0; display: flex; }
         .animate-marquee { animation: marquee 80s linear infinite; }
+        @media (max-width: 640px) {
+  #blog-slider-container .slide {
+    flex-basis: 90% !important;
+    min-width: 220px !important;
+    aspect-ratio: 1/1 !important;
+    height: auto !important;
+    margin: 0 0.25rem !important;
+  }
+}
+
+
+
         
         .banner-text {
             font-family: 'Magneto', display;
@@ -278,13 +290,33 @@
 
         /* --- BLOG SLIDER SPECIFIC STYLES --- */
         #blog-slider-container .slide {
-             flex-basis: 30%; 
-             aspect-ratio: 4 / 3; 
-             height: auto; 
-        }
-        #blog-slider-container .slide.is-active {
-             flex-basis: 40%; 
-        }
+  flex-basis: 30%;
+  aspect-ratio: 4/3;
+  min-width: 0;
+  height: auto;
+}
+
+/* Active slide on desktop is larger */
+#blog-slider-container .slide.is-active {
+  flex-basis: 40%;
+}
+
+
+/* --- MOBILE FIX --- */
+@media (max-width: 640px) {
+  #blog-slider-container .slide {
+    flex-basis: 90% !important;
+    width: 90vw !important;
+    min-width: 220px !important;
+    aspect-ratio: 1/1 !important;
+    height: auto !important;
+    margin: 0 0.25rem !important;
+  }
+  #blog-slider-container .slide.is-active {
+    flex-basis: 95% !important;
+  }
+}
+
         .blog-tile-content { 
             position: absolute;
             bottom: 0;
@@ -336,11 +368,9 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center">
-                
                 <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
                 <ul class="hidden md:flex items-center space-x-6">
                     <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
-                    
                     
                     <li class="dropdown">
                         <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
@@ -355,7 +385,6 @@
                     
                     <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
                     
-                    
                     <li class="dropdown">
                         <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Team
@@ -367,21 +396,24 @@
                         </div>
                     </li>
 
-                    
+                    <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="media-dropdown" class="dropdown-menu">
                             <a href="gallery.html" class="dropdown-item">Gallery</a>
                             <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                            <!-- --- MODIFICATION: Added Blogs link --- -->
+                            <a href="blogs.html" class="dropdown-item">Blogs</a>
                         </div>
                     </li>
                     
                     <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sponsors</a></li>
                     
-                     <li><a href="fundraiser.html" class="text-sm font-medium text-white nav-link-active transition-colors">Fundraising</a></li>
+                    <!-- --- MODIFICATION: Removed active link --- -->
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Fundraising</a></li>
                     
                     <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
                 </ul>
@@ -389,7 +421,7 @@
             </nav>
         </div>
         
-        
+        <!-- --- Copied Mobile Menu, with MODIFICATIONS --- -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
             <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
@@ -402,10 +434,12 @@
             <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
             <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
             <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <!-- --- MODIFICATION: Added Blogs link with active styles --- -->
+            <a href="blogs.html" class="block py-2 px-8 text-sm text-white bg-gray-800/50">Blogs</a>
             <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Sponsors</a>
             
-            
-            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-white bg-gray-800/50">Fundraising</a>
+            <!-- --- MODIFICATION: Removed active styles --- -->
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Fundraising</a>
             
             <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
         </div>
@@ -424,8 +458,8 @@
             <div class="relative z-10 container mx-auto px-6 w-full">
                  <div id="hero-primary-text" class="hero-text-container">
                       <h1 class="text-5xl md:text-8xl font-bold uppercase tracking-tighter">
-                           <span class="hero-title-gradient">Solar Racing Team</span><br>
-                           <span class="text-white">MIT, Manipal</span>
+                           <span class="text-white">solar <span class="text-green-400">racing </span><span class="text-white">team</span><br>
+                           <span class="text-white">mit manipal</span>
                       </h1>
                       <p class="max-w-2xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
                            Powered by the sun. Driven by innovation.
@@ -552,35 +586,34 @@
                      
                      <div id="blog-track" class="slider-track relative w-full h-full"> 
                          
-                         <div class="slide is-active" data-slide-index="0"> 
-                             <img src="1.1.jpg" alt="Engineering Challenge" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+1'">
-                             <div class="blog-tile-overlay"></div>
-                             <div class="blog-tile-content">
-                                 <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Engineering</span>
-                                 <h3 class="text-xl font-bold text-white mt-2">Overcoming Aerodynamic Hurdles</h3>
-                             </div>
-                         </div>
-                         
-                         <div class="slide" data-slide-index="1"> 
-                             <img src="IMG_3653.jpg" alt="Team Collaboration" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+2'">
-                             <div class="blog-tile-overlay"></div>
-                             <div class="blog-tile-content">
-                                 <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Team Life</span>
-                                 <h3 class="text-xl font-bold text-white mt-2">Late Nights & Breakthroughs</h3>
-                             </div>
-                         </div>
-                         
-                         <div class="slide" data-slide-index="2"> 
-                             <img src="solar cell.jpg" alt="Solar Panel Technology" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+3'">
-                             <div class="blog-tile-overlay"></div>
-                             <div class="blog-tile-content">
-                                 <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Technology</span>
-                                 <h3 class="text-xl font-bold text-white mt-2">The Future of Solar Cells</h3>
-                             </div>
-                         </div>
+                         <div class="slide is-active" data-slide-index="0">
+      <img src="1.1.jpg" alt="Engineering Challenge" class="slide-bg" />
+      <div class="blog-tile-overlay"></div>
+      <div class="blog-tile-content">
+        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Engineering</span>
+        <h3 class="text-xl font-bold text-white mt-2">Overcoming Aerodynamic Hurdles</h3>
+      </div>
+    </div>
+                         <div class="slide" data-slide-index="1">
+      <img src="IMG_3653.jpg" alt="Team Collaboration" class="slide-bg" />
+      <div class="blog-tile-overlay"></div>
+      <div class="blog-tile-content">
+        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Team Life</span>
+        <h3 class="text-xl font-bold text-white mt-2">Late Nights & Breakthroughs</h3>
+      </div>
+    </div>
+                        
+                        <div class="slide" data-slide-index="2">
+      <img src="solar cell.jpg" alt="Solar Panel Technology" class="slide-bg" />
+      <div class="blog-tile-overlay"></div>
+      <div class="blog-tile-content">
+        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Technology</span>
+            <h3 class="text-xl font-bold text-white mt-2">The Future of Solar Cells</h3>
+      </div>
+    </div>
                          
                          <div class="slide" data-slide-index="3"> 
-                             <img src="17.jpg" alt="Race Day Preparation" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+4'">
+                             <img src="17.jpg" alt="Race Day Preparation" class="slide-bg" />
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Events</span>
@@ -589,7 +622,7 @@
                          </div>
                          
                          <div class="slide" data-slide-index="4"> 
-                             <img src="BMS2.jpg" alt="Battery Management System" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+5'">
+                             <img src="BMS2.jpg" alt="Battery Management System" class="slide-bg" />
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Electronics</span>
@@ -598,7 +631,7 @@
                          </div>
                          
                          <div class="slide" data-slide-index="5"> 
-                             <img src="20.jpg" alt="Community Outreach" class="slide-bg" onerror="this.onerror=null; this.src='https://placehold.co/600x450/1a1a1a/e0e0e0?text=Blog+Image+6'">
+                             <img src="20.jpg" alt="Community Outreach" class="slide-bg" />
                              <div class="blog-tile-overlay"></div>
                              <div class="blog-tile-content">
                                  <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Outreach</span>
