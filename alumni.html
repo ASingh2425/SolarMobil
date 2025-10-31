@@ -132,6 +132,18 @@
             pointer-events: none; /* Make sure it doesn't interfere with clicks */
             z-index: -1; /* Place it behind text content */
         }
+        .cta-button { transition: all 0.3s ease; display: inline-block; padding: 12px 28px; background-color: #fff; color: #111; border-radius: 999px; font-weight: 600; text-decoration: none; }
+        .cta-button:hover { background-color: #d1d1d1; }
+
+        .cta-button-green {
+            background-color: #4ade80; /* Tailwind green-400 */
+            color: #0c0c0c; /* Dark text */
+        }
+        .cta-button-green:hover {
+            background-color: #22c55e; /* Tailwind green-500 */
+        }
+        .cta-button-secondary { background-color: rgba(255,255,255,0.1); color: #fff; }
+        .cta-button-secondary:hover { background-color: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body class="antialiased">
@@ -244,29 +256,29 @@
 </div>        
         </section>
 
-        <!-- Alumni Section -->
+        <!-- Alumni Section 
         <section class="py-20 md:py-32">
             <div class="container mx-auto px-6">
-                <!-- Year Tabs -->
+                 Year Tabs 
                 <div class="year-tabs zoom-in-section">
                     <button class="year-tab active" data-year="all">All Years</button>
-                    <!-- Add more years here as needed, e.g. -->
+                     Add more years here as needed, e.g. 
                     <button class="year-tab" data-year="2023">2023</button>
                     <button class="year-tab" data-year="2022">2022</button>
                     <button class="year-tab" data-year="2021">2021</button>
                     <button class="year-tab" data-year="2020">2020</button>
                     <button class="year-tab" data-year="2019">2019</button>
-                    <!-- ... Add buttons for all relevant years -->
+                     ... Add buttons for all relevant years 
                 </div>
 
-                <!-- Alumni Grid Container -->
+                 Alumni Grid Container 
                 <div id="alumni-container" class="zoom-in-section" style="transition-delay: 100ms;">
-                    <!-- Year Sections - Add one section per year -->
-                    <!-- Example for 2023 -->
+                     Year Sections - Add one section per year
+                     Example for 2023 
                     <div class="alumni-year-section active" data-year-section="2023">
                         <h3 class="text-2xl font-bold text-green-400 mb-8 text-center border-b border-green-400/20 pb-2">Batch of 2023</h3>
                         <div class="alumni-grid">
-                            <!-- Add alumni cards here -->
+                             Add alumni cards here 
                             <div class="alumni-card">
                                 <img src="https://placehold.co/100x100/333333/eeeeee?text=A" alt="Alumni Name" class="alumni-image">
                                 <p class="alumni-name">Alumni Name 1</p>
@@ -277,11 +289,11 @@
                                 <p class="alumni-name">Alumni Name 2</p>
                                 <p class="alumni-year">Class of 2023</p>
                             </div>
-                           <!-- ... more cards for 2023 ... -->
+                            ... more cards for 2023 ... 
                         </div>
                     </div>
 
-                    <!-- Example for 2022 -->
+                     Example for 2022 
                      <div class="alumni-year-section" data-year-section="2022">
                          <h3 class="text-2xl font-bold text-green-400 mb-8 text-center border-b border-green-400/20 pb-2">Batch of 2022</h3>
                          <div class="alumni-grid">
@@ -290,11 +302,11 @@
                                 <p class="alumni-name">Alumni Name 3</p>
                                 <p class="alumni-year">Class of 2022</p>
                             </div>
-                            <!-- ... more cards for 2022 ... -->
+                             ... more cards for 2022 ... 
                          </div>
                     </div>
 
-                     <!-- Example for 2021 -->
+                      Example for 2021 
                      <div class="alumni-year-section" data-year-section="2021">
                          <h3 class="text-2xl font-bold text-green-400 mb-8 text-center border-b border-green-400/20 pb-2">Batch of 2021</h3>
                          <div class="alumni-grid">
@@ -313,12 +325,23 @@
                                 <p class="alumni-name">Alumni Name 6</p>
                                 <p class="alumni-year">Class of 2021</p>
                             </div>
-                            <!-- ... more cards for 2021 ... -->
+                             ... more cards for 2021 ... 
                          </div>
                     </div>
 
-                     <!-- Add more year sections as needed -->
+                      Add more year sections as needed 
 
+                </div>
+            </div>
+        </section>-->
+        <section class="py-20 md:py-32 zoom-in-section">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 max-w-3xl mx-auto">Coming Soon</h2>
+                <p class="max-w-2xl mx-auto mt-6 text-gray-400">
+                    Our alumni page is currently under development. Check back soon to subscribe to updates from the SolarMobil team!
+                </p>
+                 <div class="mt-10">
+                    <a href="index.html" class="cta-button cta-button-green mt-8">Back to Home</a>
                 </div>
             </div>
         </section>
