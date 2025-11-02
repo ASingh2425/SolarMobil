@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Lessons in Solar Innovation - SolarMobil</title>
+    <!-- Use a placeholder for the favicon, or replace with your 'favicon.png' -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from your template */
+        @font-face {
+            font-family: 'Magneto';
+            /* src: url('Magneto Bold.ttf') format('truetype'); */
+            /* Using Exo 2 as a fallback for the custom font */
+            src: local('Exo 2'); 
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #E0E0E0; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Exo 2', sans-serif; }
+        #cursor-glow { position: fixed; top: 0; left: 0; width: 800px; height: 800px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 60%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: -1; transition: opacity 0.3s; }
+        #background-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; opacity: 0.2; }
+        #background-pattern { position: fixed; inset: 0; z-index: -2; display: flex; flex-direction: column; justify-content: space-around; overflow: hidden; pointer-events: none; opacity: 0.1; }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .marquee-row { flex-shrink: 0; display: flex; }
+        .animate-marquee { animation: marquee 80s linear infinite; }
+        .banner-text {
+            font-family: 'Exo 2', display; /* Fallback to Exo 2 */
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(34, 197, 94, 0.6); 
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5); 
+            white-space: nowrap;
+            padding: 0 1rem;
+            line-height: 1; 
+        }
+        .hero-title-gradient { background: -webkit-linear-gradient(45deg, #ffffff, #aaaaaa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+        .hero-section { transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
+        
+        /* Active link styles */
+        .nav-link-active { color: #ffffff !important; }
+        .dropdown-item-active { background-color: rgba(34, 197, 94, 0.2); color: #ffffff; }
+        
+        .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
+        
+        /* Dropdown styles */
+        .dropdown { position: relative; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: rgba(12, 12, 12, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.5rem; padding: 0.5rem; margin-top: 0.5rem; width: 160px; z-index: 50; }
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu.is-open { display: block; }
+        .dropdown-item { display: block; padding: 0.5rem 1rem; color: #E0E0E0; font-size: 0.875rem; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+        .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+        header { position: fixed; z-index: 50; left: 0; right: 0; top: 0; }
+        main { padding-top: 80px; } /* 80px to clear fixed header */
+        .contact-section { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; 
+            height: auto;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* --- Article-Specific Styles --- */
+        .article-content h3 {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #ffffff; /* text-white */
+            margin-top: 2.5rem; /* mt-10 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .article-content p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75; /* leading-relaxed */
+            color: #D1D5DB; /* text-gray-300 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            text-align: justify; /* --- ADDED AS REQUESTED --- */
+        }
+        .article-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem; /* pl-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .article-content li {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75; /* leading-relaxed */
+            color: #D1D5DB; /* text-gray-300 */
+            margin-bottom: 0.75rem; /* mb-3 */
+            padding-left: 0.5rem; /* pl-2 */
+            text-align: justify; /* --- ADDED AS REQUESTED --- */
+        }
+        .article-content li::marker {
+            color: #22c55e; /* text-green-500 */
+        }
+        
+        /* --- NEW PULL QUOTE STYLE --- */
+        .pull-quote {
+            border-left: 4px solid #22c55e; /* green-500 */
+            padding-left: 1.5rem; /* pl-6 */
+            font-size: 1.25rem; /* text-xl */
+            font-style: italic;
+            color: #ffffff; /* text-white */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        /* --- End Article Styles --- */
+    </style>
+</head>
+<body class="antialiased">
+    <div id="cursor-glow"></div>
+    <canvas id="background-canvas"></canvas>
+    <div id="background-pattern" aria-hidden="true">
+        <!-- Marquee content from your template -->
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee" style="animation-direction: reverse;"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+        <div class="marquee-row"><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div><div class="flex min-w-full flex-shrink-0 animate-marquee"><span class="banner-text">SolarMobil</span><span class="banner-text">SolarMobil</span></div></div>
+    </div>
+
+    <!-- Header from your template -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center">
+                <!-- Using a placeholder logo that fits the theme -->
+                <a href="index.html" class="block h-10"><img src="logo1.png" alt="SolarMobil Logo" class="h-full w-auto" style="mix-blend-mode: lighten;"></a>
+                <ul class="hidden md:flex items-center space-x-6">
+                    <li><a href="about.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a></li>
+                    
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="projects-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Projects
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="projects-dropdown" class="dropdown-menu">
+                            <a href="projects.html" class="dropdown-item">Cars</a>
+                            <a href="research.html" class="dropdown-item">Research</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="subsystems.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Subsystems</a></li>
+                    
+                    <li class="dropdown">
+                        <button data-dropdown-toggle="team-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
+                            Team
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="team-dropdown" class="dropdown-menu">
+                            <a href="team.html" class="dropdown-item">Current Team</a>
+                            <a href="alumni.html" class="dropdown-item">Alumni</a>
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <!-- Active link for Media -->
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
+                            Media
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="media-dropdown" class="dropdown-menu">
+                            <a href="gallery.html" class="dropdown-item">Gallery</a>
+                            <a href="newsletter.html" class="dropdown-item">Newsletter</a>
+                            <!-- Active sub-link for Blogs -->
+                            <a href="blogs.html" class="dropdown-item dropdown-item-active">Blogs</a>
+                        </div>
+                    </li>
+                    
+                    <li><a href="sponsors.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Partners</a></li>
+                    
+                    <li><a href="fundraiser.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Fundraising</a></li>
+                    
+                    <li><a href="contact.html" class="px-4 py-2 text-sm font-semibold text-black bg-green-500 rounded-full hover:bg-gray-200 transition-colors">Contact</a></li>
+                </ul>
+                <button id="mobile-menu-button" class="md:hidden text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu from your template -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/50 backdrop-blur-xl">
+            <a href="about.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">About</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Projects</span>
+            <a href="projects.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Cars</a>
+            <a href="research.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Research</a>
+            <a href="subsystems.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Subsystems</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Team</span>
+            <a href="team.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Current Team</a>
+            <a href="alumni.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Alumni</a>
+            <span class="block pt-3 px-6 text-xs text-green-400 uppercase font-semibold">Media</span>
+            <a href="gallery.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Gallery</a>
+            <a href="newsletter.html" class="block py-2 px-8 text-sm text-gray-300 hover:bg-gray-800">Newsletter</a>
+            <a href="blogs.html" class="block py-2 px-8 text-sm text-white bg-gray-800/50">Blogs</a>
+            <a href="sponsors.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Partners</a>
+            
+            <a href="fundraiser.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Fundraising</a>
+            
+            <a href="contact.html" class="block py-3 px-6 text-sm text-gray-300 hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section (Content from Article 1) -->
+        <section class="hero-section pt-48 pb-32 text-center" 
+            style="
+                background-image: 
+                    radial-gradient(circle, rgba(20, 19, 19, 0.7) 0%, rgba(35, 34, 34, 0.9) 90%), 
+                    /* Using a relevant placeholder for this article */
+                    url('blog1.jpg');
+                background-size: cover;
+                background-position: center center;
+            ">
+            <div class="hero-content container mx-auto px-6">
+                <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Team Blog</p>
+                <h1 class="text-4xl md:text-7xl font-bold uppercase tracking-tighter mt-4">
+                    Global Lessons in <span class="text-green-400">Solar Innovation</span>
+                </h1>
+                <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
+                    Team SolarMobil Meets Suhrid Bhat
+                </DEC>
+            </div>
+        </section>
+
+        <!-- Main Article Body Section -->
+        <!-- THIS IS THE NEW LAYOUT SECTION -->
+        <section class="py-20 md:py-24">
+            <!-- Use max-w-7xl for a wider grid -->
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+                    <!-- Main Article Content (Left/Main Column) -->
+                    <div class="md:col-span-2 article-content">
+                        
+                        <!-- Article 1 Content Start -->
+                        <div class="zoom-in-section">
+                            <p class="text-lg text-gray-400 mb-6"><em>On 7th October 2025, we had the privilege of interacting with Mr. Suhrid Bhat, a Stanford-trained engineer and board member at an EV charging infrastructure start-up in the USA, who visited MIT Manipal for an invited talk titled "Tomorrow's Mobility: Autonomous Vehicles and Electric Vehicles."</em></p>
+                            
+                            <p>The session, organised by the Office of the Associate Director under the Collaboration, Consultancy & IPR Lecture Series, offered us an incredible opportunity to learn from someone whose journey spans both cutting-edge industry experience and years of mentoring university solar racing teams across the world.</p>
+                        </div>
+
+                        <div class="zoom-in-section" style="transition-delay: 100ms;">
+                            <h3>Learning from a Global Mentor</h3>
+                            <p>Mr. Bhat's professional journey includes leadership roles at SolarEdge, ChargePoint, and Volkswagen USA, but what resonated most with us was his experience as a mentor to the Stanford and UC Berkeley Solar Racing Teams, two accomplished teams to compete at the World Solar Challenge and American Solar Challenge.</p>
+                            <p>He shared how these teams built their culture of innovation and excellence, teaching us that the true success of a student project lies not only in engineering expertise, but also in mindset and collaboration.</p>
+                            
+                            <!-- NEW PULL QUOTE -->
+                            <blockquote class="pull-quote zoom-in-section">
+                                "One of his most powerful messages was to benchmark ourselves against the best in the world and to never limit our imagination or ambition..."
+                            </blockquote>
+                        </div>
+
+                        <!-- Image Placeholder Section -->
+                        <div class="zoom-in-section grid grid-cols-1 md:grid-cols-2 gap-6 my-10" style="transition-delay: 150ms;">
+                            <img src="https://placehold.co/600x400/1F2937/4ADE80?text=Stanford+Solar+Team" alt="Placeholder image of Stanford Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                            <img src="https://placehold.co/600x400/1F2937/4ADE80?text=UC+Berkeley+Solar+Team" alt="Placeholder image of UC Berkeley Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                        </div>
+
+                        <div class="zoom-in-section" style="transition-delay: 200ms;">
+                            <h3>A Workshop Full of Inspiration</h3>
+                            <p>After his formal lecture at the MIT KEF R&D Centre Auditorium, Mr. Bhat joined us in our SolarMobil Workshop for an informal interaction surrounded by our prototypes, solar panels, and whiteboards filled with ideas.</p>
+                            <p>He encouraged us to build a culture where improvement is continuous and curiosity never fades. He reminded us that every great engineering team succeeds because it learns relentlessly, refines constantly, and celebrates progress as much as results.</p>
+                        </div>
+
+                        <!-- Image Placeholder Section -->
+                        <div class="zoom-in-section my-10" style="transition-delay: 250ms;">
+                            <img src="https://placehold.co/800x450/1F2937/4ADE80?text=Workshop+Interaction" alt="Placeholder image of workshop interaction" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                        </div>
+
+                        <div class="zoom-in-section" style="transition-delay: 300ms;">
+                            <h3>Looking Beyond Boundaries</h3>
+                            <p>As a team with ambitions to compete in international solar racing competitions, we found his advice both motivating and practical. He gave us a clearer picture of what it takes to operate at a world-class level how to align our design processes, testing methods, and teamwork culture with global standards.</p>
+                            <p>His encouragement has strengthened our belief that Team SolarMobil can stand shoulder to shoulder with the best solar racing teams in the world. More importantly, he reminded us that the pursuit of excellence doesn't end with one successful vehicle it's a continuous journey of learning and evolution.</p>
+                            <p>We left the session feeling inspired and grateful, with a renewed sense of purpose for our journey ahead.</p>
+                        </div>
+                        <!-- Article 1 Content End -->
+
+                    </div>
+
+                    <!-- NEW Sidebar (Right/Sticky Column) -->
+                    <aside class="md:col-span-1 relative">
+                        <!-- The top-28 value = 80px header + 32px padding-top -->
+                        <div class="sticky top-28"> 
+                            
+                            <!-- Widget 1: Mentor Profile -->
+                            <div class="zoom-in-section bg-gray-900/50 border border-green-500/30 rounded-lg p-6 mb-8">
+                                <h4 class="font-exo2 text-xl font-bold text-green-400 mb-4 text-center">Meet the Mentor</h4>
+                                <img src="https://placehold.co/200x200/1F2937/FFFFFF?text=Suhrid+Bhat" alt="Mr. Suhrid Bhat" class="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-green-500">
+                                <h5 class="text-lg font-bold text-white text-center">Mr. Suhrid Bhat</h5>
+                                <p class="text-sm text-gray-400 text-center">Stanford-trained Engineer</p>
+                                <p class="text-sm text-gray-400 text-center mt-2">Board Member, EV Start-up (USA)</p>
+                                <p class="text-sm text-gray-400 text-center mt-2">Mentor, Stanford & UC Berkeley Solar Racing</p>
+                            </div>
+
+                            <!-- Widget 2: Key Takeaways -->
+                            <div class="zoom-in-section bg-gray-900/50 border border-gray-700/50 rounded-lg p-6">
+                                <h4 class="font-exo2 text-xl font-bold text-white mb-5">Key Takeaways</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-5 h-5 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-3 mt-1">
+                                            <span class="font-bold text-xs">1</span>
+                                        </div>
+                                        <p class_="text-gray-300 text-sm">Benchmark globally and believe in world-class standards.</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-5 h-5 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-3 mt-1">
+                                            <span class="font-bold text-xs">2</span>
+                                        </div>
+                                        <p class_="text-gray-300 text-sm">Innovation is boundless when imagination is fearless.</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-5 h-5 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-3 mt-1">
+                                            <span class="font-bold text-xs">3</span>
+                                        </div>
+                                        <p class_="text-gray-300 text-sm">Relentless improvement is the key to long-term success.</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-5 h-5 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mr-3 mt-1">
+                                            <span class="font-bold text-xs">4</span>
+                                        </div>
+                                        <p class_="text-gray-300 text-sm">Team culture (learning, trust, persistence) is as vital as technology.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section from your template -->
+        <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <!-- Using the new placeholder logo -->
+                <img src="logo1.png" alt="SolarMobil Logo Watermark" class="watermark-logo" style="mix-blend-mode: lighten;">
+            </div>
+            
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-[1]">
+                <div>
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Address:</h4>
+                    <p class="text-gray-400 text-base leading-relaxed"> 
+                        Techshila, Workshop 07, Opp. Recreation Center<br>
+                        Manipal Institute of Technology, Manipal,<br>
+                        Udupi, Karnataka - 576 104.
+                    </p>
+                </div>
+                <div class="text-left md:text-right">
+                    <h4 class="text-sm font-bold text-green-400 uppercase tracking-widest mb-2">Contact Us:</h4>
+                    <p class="text-gray-400 text-base mb-1"> 
+                        Team Manager<br>
+                        Varun Jayram<br>
+                        <a href="tel:+91 7208481971" class="hover:text-white">+91 7208481971</a>
+                    </p>
+                    <p class="text-gray-400 text-base"> 
+                        Email: <a href="mailto:team.solarmobil@gmail.com" class="hover:text-white">team.solarmobil@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main> 
+
+    <!-- Footer from your template -->
+    <footer class="py-12 bg-black/20">
+       <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2025 SolarMobil. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="https://www.linkedin.com/company/solarmobil-manipal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.5 2h-15A2.5 2.5 0 002 4.5v15A2.5 2.5 0 004.5 22h15a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0019.5 2zM8.5 18H5.5V9h3v9zm-1.5-10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18.5 18h-3v-4.25c0-1.02-.02-2.32-1.41-2.32-1.41 0-1.63 1.1-1.63 2.24V18h-3V9h2.88v1.32h.04c.4-.76 1.38-1.55 2.84-1.55 3.04 0 3.6 2 3.6 4.6V18z" clip-rule="evenodd" /></svg> </a>
+    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-white transition-colors"
+        aria-label="Instagram">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 3a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5Zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm5.25-.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"/>
+      </svg>                   <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
+                </div>
+            </div>
+       </div>
+    </footer>
+
+    <!-- JavaScript from your template -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Dropdown Click Logic ---
+            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    const dropdownId = toggle.getAttribute('data-dropdown-toggle');
+                    const dropdownMenu = document.getElementById(dropdownId);
+                    if (dropdownMenu) {
+                        const isOpen = dropdownMenu.classList.contains('is-open');
+                        document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                            if (openMenu !== dropdownMenu) {
+                                openMenu.classList.remove('is-open');
+                            }
+                        });
+                        if (isOpen) {
+                            dropdownMenu.classList.remove('is-open');
+                        } else {
+                            dropdownMenu.classList.add('is-open');
+                        }
+                    }
+                });
+            });
+            window.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu.is-open').forEach(openMenu => {
+                        openMenu.classList.remove('is-open');
+                    });
+                }
+            });
+            
+            // --- Original Menu & Scroll JS ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            
+            const header = document.getElementById('header');
+            const heroSection = document.querySelector('.hero-section'); 
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if(header) { header.style.backgroundColor = scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)';}
+                if(heroSection) {
+                    const scale = Math.max(0.8, 1 - scrollY / 1000);
+                    const opacity = Math.max(0.4, 1 - scrollY / 500);
+                    heroSection.style.transform = `scale(${scale})`;
+                    heroSection.style.opacity = opacity;
+                }
+            });
+             if(header) { header.style.backgroundColor = window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)';}
+
+            const cursorGlow = document.getElementById('cursor-glow');
+            if (cursorGlow) { window.addEventListener('mousemove', (e) => { cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px'; }); document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; }); document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; }); }
+            
+            const animatedElements = document.querySelectorAll('.zoom-in-section');
+            const observer = new IntersectionObserver((entries) => { 
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Unobserve after animating once
+                    } 
+                }); 
+            }, { threshold: 0.1 }); 
+            animatedElements.forEach(el => observer.observe(el));
+
+            const canvas = document.getElementById('background-canvas');
+            if(canvas) { const ctx = canvas.getContext('2d'); let width, height; const resizeCanvas = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }; const drawTrack = () => { ctx.clearRect(0, 0, width, height); ctx.strokeStyle = 'rgba(34, 197, 94, 0.5)'; ctx.lineWidth = 2; ctx.shadowColor = 'rgba(34, 197, 94, 1)'; ctx.shadowBlur = 10; ctx.beginPath(); ctx.moveTo(width * 0.1, height * 0.2); ctx.bezierCurveTo(width * 0.3, height * 0.4, width * 0.7, height * 0.1, width * 0.9, height * 0.3); ctx.stroke(); ctx.beginPath(); ctx.moveTo(width * 0.95, height * 0.8); ctx.bezierCurveTo(width * 0.8, height * 0.9, width * 0.4, height * 0.95, width * 0.1, height * 0.7); ctx.stroke(); }; window.addEventListener('resize', () => { resizeCanvas(); drawTrack(); }); resizeCanvas(); drawTrack(); }
+        });
+    </script>
+</body>
+</html>
+
