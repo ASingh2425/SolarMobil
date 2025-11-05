@@ -124,7 +124,11 @@
             text-align: center;
         }
         
-        .nav-link-active { color: #ffffff !important; }
+        /* --- UPDATED Active Nav Link Style --- */
+.nav-link-active { 
+    color: #4ade80 !important; /* Tailwind's green-400 */
+    font-weight: 600 !important;
+}
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
         .card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
@@ -399,7 +403,7 @@
 
                     <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -586,46 +590,44 @@
                  <div id="blog-slider-container" class="slider-container relative mt-16 w-full max-w-7xl mx-auto">
                      
                      <div id="blog-track" class="slider-track relative w-full h-full"> 
-                         
-                         <div class="slide is-active" data-slide-index="0">
-      <img src="1.1.jpg" alt="Engineering Challenge" class="slide-bg" />
-      <div class="blog-tile-overlay"></div>
-      <div class="blog-tile-content">
-        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">strategy</span>
-        <h3 class="text-xl font-bold text-white mt-2">The Strategy Subsystem at Team SolarMobil</h3>
-      </div>
-    </div>
-                         <div class="slide" data-slide-index="1">
-      <img src="IMG_3653.jpg" alt="Team Collaboration" class="slide-bg" />
-      <div class="blog-tile-overlay"></div>
-      <div class="blog-tile-content">
-        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">SEVC VIRTUALS 2025</span>
-        <h3 class="text-xl font-bold text-white mt-2">From Design to Dialogue</h3>
-      </div>
-    </div>
-                        
-                        <div class="slide" data-slide-index="2">
-      <img src="solar cell.jpg" alt="Solar Panel Technology" class="slide-bg" />
-      <div class="blog-tile-overlay"></div>
-      <div class="blog-tile-content">
-        <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Heliark's Triumph</span>
+    
+    <a href="blog3.html" class="slide is-active" data-slide-index="0">
+        <img src="strategy1.png" alt="Engineering Challenge" class="slide-bg" />
+        <div class="blog-tile-overlay"></div>
+        <div class="blog-tile-content">
+            <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">strategy</span>
+            <h3 class="text-xl font-bold text-white mt-2">The Strategy Subsystem at Team SolarMobil</h3>
+        </div>
+    </a>
+    
+    <a href="blog4.html" class="slide" data-slide-index="1">
+        <img src="sevcblog.jpg" alt="Team Collaboration" class="slide-bg" />
+        <div class="blog-tile-overlay"></div>
+        <div class="blog-tile-content">
+            <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">SEVC VIRTUALS 2025</span>
+            <h3 class="text-xl font-bold text-white mt-2">From Design to Dialogue</h3>
+        </div>
+    </a>
+    
+    <a href="blog2.html" class="slide" data-slide-index="2">
+        <img src="WhatsApp Image 2025-04-04 at 23.39.19_3d171d05.jpg" alt="Solar Panel Technology" class="slide-bg" />
+        <div class="blog-tile-overlay"></div>
+        <div class="blog-tile-content">
+            <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Heliark's Triumph</span>
             <h3 class="text-xl font-bold text-white mt-2">When Speed Meets Sustainability</h3>
-      </div>
-    </div>
-                         
-                         <div class="slide" data-slide-index="3"> 
-                             <img src="17.jpg" alt="Race Day Preparation" class="slide-bg" />
-                             <div class="blog-tile-overlay"></div>
-                             <div class="blog-tile-content">
-                                 <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Meet With the Veteran</span>
-                                 <h3 class="text-xl font-bold text-white mt-2">From DARPA Robotics to EV Infrastructure</h3>
-                             </div>
-                         </div>
-                         
-                         
-                         
-                         
-                     </div>
+        </div>
+    </a>
+    
+    <a href="blog1.html" class="slide" data-slide-index="3"> 
+        <img src="blog1.jpg" alt="Race Day Preparation" class="slide-bg" />
+        <div class="blog-tile-overlay"></div>
+        <div class="blog-tile-content">
+            <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Meet With the Veteran</span>
+            <h3 class="text-xl font-bold text-white mt-2">From DARPA Robotics to EV Infrastructure</h3>
+        </div>
+    </a>
+    
+</div>
                      
                      
                      <div class="slider-controls relative w-full mt-4 h-16 mb-8"> 
@@ -718,6 +720,74 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- ADD THIS NEW BLOCK ---
+            // --- Active Nav Link Logic ---
+            try {
+                // Get the file name of the current page, e.g., "about.html" or "index.html"
+                // If it's the root domain, it defaults to "index.html"
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+                // Find all main nav links AND dropdown toggle buttons in the desktop nav
+                // The md\\:flex selector is needed to escape the ":" for querySelector
+                const navLinks = document.querySelectorAll('header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button');
+                
+                // Find all links in the mobile menu
+                const mobileLinks = document.querySelectorAll('#mobile-menu a');
+
+                // This function checks both desktop links and dropdowns
+                const highlightActiveLink = (links) => {
+                    links.forEach(link => {
+                        let isMatch = false;
+                        
+                        // Case 1: It's a simple <a> link (like "About" or "Partners")
+                        if (link.tagName === 'A' && link.href) {
+                            if (link.href.endsWith(currentPage)) {
+                                isMatch = true;
+                            }
+                        } 
+                        // Case 2: It's a dropdown <button> (like "Projects" or "Team")
+                        else if (link.tagName === 'BUTTON') {
+                            // Find the dropdown menu associated with this button
+                            const dropdownId = link.getAttribute('data-dropdown-toggle');
+                            if (dropdownId) {
+                                const dropdownMenu = document.getElementById(dropdownId);
+                                if (dropdownMenu) {
+                                    // Check all <a> links inside this dropdown
+                                    const dropdownLinks = dropdownMenu.querySelectorAll('a');
+                                    for (const dropdownLink of dropdownLinks) {
+                                        if (dropdownLink.href.endsWith(currentPage)) {
+                                            isMatch = true; // Found a match inside the dropdown
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // If we found a match, add the active class
+                        if (isMatch) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                };
+
+                highlightActiveLink(navLinks); // Run for desktop nav
+                
+                // Special logic for mobile menu (it's all plain <a> tags)
+                mobileLinks.forEach(link => {
+                     if (link.href.endsWith(currentPage)) {
+                         // Mobile menu has a different active style
+                         // (like the "Blogs" link in your example)
+                         link.style.color = '#4ade80'; // Green
+                         link.style.fontWeight = '600';
+                         link.classList.add('bg-gray-800/50'); // Active background
+                     }
+                });
+
+            } catch (error) {
+                console.error("Error highlighting active nav link:", error);
+            }
+            // --- END: Active Nav Link Logic ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuButton && mobileMenu) {

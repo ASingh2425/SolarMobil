@@ -27,7 +27,7 @@
         .marquee-row { flex-shrink: 0; display: flex; }
         .animate-marquee { animation: marquee 80s linear infinite; }
         .banner-text {
-            font-family: 'Exo 2', display; /* Fallback to Exo 2 */
+            font-family: 'Magneto', display; /* Fallback to Exo 2 */
             font-size: clamp(4rem, 10vw, 8rem);
             color: transparent;
             -webkit-text-stroke: 1px rgba(34, 197, 94, 0.6); 
@@ -40,7 +40,11 @@
         .hero-section { transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
         
         /* Active link styles */
-        .nav-link-active { color: #ffffff !important; }
+        /* --- UPDATED Active Nav Link Style --- */
+.nav-link-active { 
+    color: #4ade80 !important; /* Tailwind's green-400 */
+    font-weight: 600 !important;
+}
         .dropdown-item-active { background-color: rgba(34, 197, 94, 0.2); color: #ffffff; }
         
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
@@ -160,7 +164,7 @@
 
                     <li class="dropdown">
                         <!-- Active link for Media -->
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -232,6 +236,10 @@
             <!-- Use max-w-7xl for a wider grid -->
             <div class="container mx-auto px-6 max-w-7xl">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                     <a href="blogs.html" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors group">
+                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            Back to All Blogs
+                        </a>
 
                     <!-- Main Article Content (Left/Main Column) -->
                     <div class="md:col-span-2 article-content">
@@ -256,8 +264,8 @@
 
                         <!-- Image Placeholder Section -->
                         <div class="zoom-in-section grid grid-cols-1 md:grid-cols-2 gap-6 my-10" style="transition-delay: 150ms;">
-                            <img src="https://placehold.co/600x400/1F2937/4ADE80?text=Stanford+Solar+Team" alt="Placeholder image of Stanford Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
-                            <img src="https://placehold.co/600x400/1F2937/4ADE80?text=UC+Berkeley+Solar+Team" alt="Placeholder image of UC Berkeley Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                            <img src="stanford.jpg" alt="Placeholder image of Stanford Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                            <img src="calsol.jpg" alt="Placeholder image of UC Berkeley Solar Team" class="rounded-lg shadow-lg w-full h-auto object-cover">
                         </div>
 
                         <div class="zoom-in-section" style="transition-delay: 200ms;">
@@ -266,10 +274,6 @@
                             <p>He encouraged us to build a culture where improvement is continuous and curiosity never fades. He reminded us that every great engineering team succeeds because it learns relentlessly, refines constantly, and celebrates progress as much as results.</p>
                         </div>
 
-                        <!-- Image Placeholder Section -->
-                        <div class="zoom-in-section my-10" style="transition-delay: 250ms;">
-                            <img src="https://placehold.co/800x450/1F2937/4ADE80?text=Workshop+Interaction" alt="Placeholder image of workshop interaction" class="rounded-lg shadow-lg w-full h-auto object-cover">
-                        </div>
 
                         <div class="zoom-in-section" style="transition-delay: 300ms;">
                             <h3>Looking Beyond Boundaries</h3>
@@ -289,7 +293,7 @@
                             <!-- Widget 1: Mentor Profile -->
                             <div class="zoom-in-section bg-gray-900/50 border border-green-500/30 rounded-lg p-6 mb-8">
                                 <h4 class="font-exo2 text-xl font-bold text-green-400 mb-4 text-center">Meet the Mentor</h4>
-                                <img src="https://placehold.co/200x200/1F2937/FFFFFF?text=Suhrid+Bhat" alt="Mr. Suhrid Bhat" class="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-green-500">
+                                <img src="suhrid.jpeg" alt="Mr. Suhrid Bhat" class="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-green-500">
                                 <h5 class="text-lg font-bold text-white text-center">Mr. Suhrid Bhat</h5>
                                 <p class="text-sm text-gray-400 text-center">Stanford-trained Engineer</p>
                                 <p class="text-sm text-gray-400 text-center mt-2">Board Member, EV Start-up (USA)</p>
@@ -331,6 +335,12 @@
                     </aside>
 
                 </div>
+                <div class="lg:col-span-2 zoom-in-section text-justify" style="transition-delay: 300ms;">
+                     <a href="blogs.html" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors group">
+                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            Back to All Blogs
+                        </a>
+                    </div>
             </div>
         </section>
 
@@ -388,6 +398,74 @@
     <!-- JavaScript from your template -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- ADD THIS NEW BLOCK ---
+            // --- Active Nav Link Logic ---
+            try {
+                // Get the file name of the current page, e.g., "about.html" or "index.html"
+                // If it's the root domain, it defaults to "index.html"
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+                // Find all main nav links AND dropdown toggle buttons in the desktop nav
+                // The md\\:flex selector is needed to escape the ":" for querySelector
+                const navLinks = document.querySelectorAll('header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button');
+                
+                // Find all links in the mobile menu
+                const mobileLinks = document.querySelectorAll('#mobile-menu a');
+
+                // This function checks both desktop links and dropdowns
+                const highlightActiveLink = (links) => {
+                    links.forEach(link => {
+                        let isMatch = false;
+                        
+                        // Case 1: It's a simple <a> link (like "About" or "Partners")
+                        if (link.tagName === 'A' && link.href) {
+                            if (link.href.endsWith(currentPage)) {
+                                isMatch = true;
+                            }
+                        } 
+                        // Case 2: It's a dropdown <button> (like "Projects" or "Team")
+                        else if (link.tagName === 'BUTTON') {
+                            // Find the dropdown menu associated with this button
+                            const dropdownId = link.getAttribute('data-dropdown-toggle');
+                            if (dropdownId) {
+                                const dropdownMenu = document.getElementById(dropdownId);
+                                if (dropdownMenu) {
+                                    // Check all <a> links inside this dropdown
+                                    const dropdownLinks = dropdownMenu.querySelectorAll('a');
+                                    for (const dropdownLink of dropdownLinks) {
+                                        if (dropdownLink.href.endsWith(currentPage)) {
+                                            isMatch = true; // Found a match inside the dropdown
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // If we found a match, add the active class
+                        if (isMatch) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                };
+
+                highlightActiveLink(navLinks); // Run for desktop nav
+                
+                // Special logic for mobile menu (it's all plain <a> tags)
+                mobileLinks.forEach(link => {
+                     if (link.href.endsWith(currentPage)) {
+                         // Mobile menu has a different active style
+                         // (like the "Blogs" link in your example)
+                         link.style.color = '#4ade80'; // Green
+                         link.style.fontWeight = '600';
+                         link.classList.add('bg-gray-800/50'); // Active background
+                     }
+                });
+
+            } catch (error) {
+                console.error("Error highlighting active nav link:", error);
+            }
+            // --- END: Active Nav Link Logic ---
             // --- Dropdown Click Logic ---
             const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
             dropdownToggles.forEach(toggle => {

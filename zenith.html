@@ -50,7 +50,11 @@
         .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
 
         /* --- SHARED SLIDER STYLES --- */
-        .nav-link-active { color: #ffffff !important; }
+        /* --- UPDATED Active Nav Link Style --- */
+.nav-link-active { 
+    color: #4ade80 !important; /* Tailwind's green-400 */
+    font-weight: 600 !important;
+}
         .dropdown-item-active { background-color: rgba(34, 197, 94, 0.2); color: #ffffff; }
 
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
@@ -165,7 +169,7 @@
 
                     <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -330,6 +334,74 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- ADD THIS NEW BLOCK ---
+            // --- Active Nav Link Logic ---
+            try {
+                // Get the file name of the current page, e.g., "about.html" or "index.html"
+                // If it's the root domain, it defaults to "index.html"
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+                // Find all main nav links AND dropdown toggle buttons in the desktop nav
+                // The md\\:flex selector is needed to escape the ":" for querySelector
+                const navLinks = document.querySelectorAll('header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button');
+                
+                // Find all links in the mobile menu
+                const mobileLinks = document.querySelectorAll('#mobile-menu a');
+
+                // This function checks both desktop links and dropdowns
+                const highlightActiveLink = (links) => {
+                    links.forEach(link => {
+                        let isMatch = false;
+                        
+                        // Case 1: It's a simple <a> link (like "About" or "Partners")
+                        if (link.tagName === 'A' && link.href) {
+                            if (link.href.endsWith(currentPage)) {
+                                isMatch = true;
+                            }
+                        } 
+                        // Case 2: It's a dropdown <button> (like "Projects" or "Team")
+                        else if (link.tagName === 'BUTTON') {
+                            // Find the dropdown menu associated with this button
+                            const dropdownId = link.getAttribute('data-dropdown-toggle');
+                            if (dropdownId) {
+                                const dropdownMenu = document.getElementById(dropdownId);
+                                if (dropdownMenu) {
+                                    // Check all <a> links inside this dropdown
+                                    const dropdownLinks = dropdownMenu.querySelectorAll('a');
+                                    for (const dropdownLink of dropdownLinks) {
+                                        if (dropdownLink.href.endsWith(currentPage)) {
+                                            isMatch = true; // Found a match inside the dropdown
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // If we found a match, add the active class
+                        if (isMatch) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                };
+
+                highlightActiveLink(navLinks); // Run for desktop nav
+                
+                // Special logic for mobile menu (it's all plain <a> tags)
+                mobileLinks.forEach(link => {
+                     if (link.href.endsWith(currentPage)) {
+                         // Mobile menu has a different active style
+                         // (like the "Blogs" link in your example)
+                         link.style.color = '#4ade80'; // Green
+                         link.style.fontWeight = '600';
+                         link.classList.add('bg-gray-800/50'); // Active background
+                     }
+                });
+
+            } catch (error) {
+                console.error("Error highlighting active nav link:", error);
+            }
+            // --- END: Active Nav Link Logic ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuButton && mobileMenu) {

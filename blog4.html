@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heliark's Triumph - SolarMobil</title>
+    <title>Team SolarMobil at SEVC Virtuals 2025 - SolarMobil</title>
     <!-- Use a placeholder for the favicon, or replace with your 'favicon.png' -->
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,6 @@
         @font-face {
             font-family: 'Magneto';
             /* src: url('Magneto Bold.ttf') format('truetype'); */
-            /* Using Exo 2 as a fallback for the custom font */
             src: local('Exo 2'); 
         }
         body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #E0E0E0; overflow-x: hidden; }
@@ -81,8 +80,6 @@
             color: #ffffff; /* text-white */
             margin-top: 2.5rem; /* mt-10 */
             margin-bottom: 1rem; /* mb-4 */
-            /* Ensure headings don't break inside a column */
-            break-inside: avoid-after;
         }
         .article-content p {
             font-size: 1.125rem; /* text-lg */
@@ -90,8 +87,6 @@
             color: #D1D5DB; /* text-gray-300 */
             margin-bottom: 1.5rem; /* mb-6 */
             text-align: justify; /* --- ADDED AS REQUESTED --- */
-            /* Ensure paragraphs don't break weirdly */
-            break-inside: avoid;
         }
         .article-content ul {
             list-style-type: disc;
@@ -110,49 +105,75 @@
             color: #22c55e; /* text-green-500 */
         }
         
-        /* --- NEW PULL QUOTE STYLE --- */
-        .pull-quote {
-            border-left: 4px solid #22c55e; /* green-500 */
-            padding-left: 1.5rem; /* pl-6 */
-            font-size: 1.25rem; /* text-xl */
-            font-style: italic;
-            color: #ffffff; /* text-white */
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-            /* Ensure quote doesn't break inside a column */
-            break-inside: avoid;
-        }
-        
-        /* --- NEW: Trophy Card Style --- */
-        .trophy-card {
-            width: 160px; /* Set a fixed width for flex-wrap */
+        /* --- NEW: Sidebar Widget --- */
+        .sidebar-widget {
             background: linear-gradient(145deg, #1f2937, #111827);
             border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .sidebar-widget h3 {
+            margin-top: 0;
+            color: #22c55e; /* green-500 */
+        }
+        .sidebar-widget ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .sidebar-widget li {
+            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #E0E0E0;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .sidebar-widget li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-weight: 900;
+            color: #22c55e; /* green-500 */
+        }
+
+        /* --- NEW: Presenter Card --- */
+        .presenter-card {
+            background: #111827; /* gray-900 */
+            border: 1px solid #374151; /* gray-700 */
+            border-radius: 0.75rem;
             padding: 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        .trophy-card:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: linear-gradient(145deg, #2a3a4e, #1a2436);
+        .presenter-card:hover {
+            transform: translateY(-5px);
+            border-color: #22c55e; /* green-500 */
             box-shadow: 0 8px 30px rgba(34, 197, 94, 0.2);
-            border-color: rgba(34, 197, 94, 0.7);
         }
-        .trophy-card span {
-            font-size: 3rem; /* 48px */
-            line-height: 1;
-            display: block;
-            margin-bottom: 0.75rem;
-            text-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+        .presenter-card .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            background-color: #374151; /* gray-700 */
+            border: 2px solid #4B5563; /* gray-600 */
         }
-        .trophy-card h4 {
-            font-family: 'Exo 2', sans-serif;
-            font-weight: 600;
-            font-size: 1rem; /* 16px */
+        .presenter-card h4 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
             color: #ffffff;
-            line-height: 1.4;
+            margin-bottom: 0.25rem;
+        }
+        .presenter-card p {
+            font-size: 0.875rem; /* text-sm */
+            color: #22c55e; /* green-500 */
+            font-weight: 500;
+            margin-bottom: 0;
+            text-align: center;
         }
         /* --- End Article Styles --- */
     </style>
@@ -247,29 +268,29 @@
     </header>
 
     <main>
-        <!-- Hero Section (Content from Article 2) -->
+        <!-- Hero Section (Content from Article 4) -->
         <section class="hero-section pt-48 pb-32 text-center" 
             style="
                 background-image: 
                     radial-gradient(circle, rgba(20, 19, 19, 0.7) 0%, rgba(35, 34, 34, 0.9) 90%), 
                     /* Using a relevant placeholder for this article */
-                    url('heliark.jpeg');
+                    url('blog4.jpg');
                 background-size: cover;
                 background-position: center center;
             ">
             <div class="hero-content container mx-auto px-6">
-                <p class="text-sm font-bold text-green-400 uppercase tracking-widest">ESVC 2025</p>
+                <p class="text-sm font-bold text-green-400 uppercase tracking-widest">Team Blog</p>
                 <h1 class="text-4xl md:text-7xl font-bold uppercase tracking-tighter mt-4">
-                    Heliark's <span class="text-green-400">Triumph</span>
+                    Team SolarMobil at <span class="text-green-400">SEVC Virtuals</span>
                 </h1>
                 <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-400">
-                    Breaking Barriers at India's Premier Solar-Electric Vehicle Championship
+                    Bengaluru, October 12, 2025
                 </p>
             </div>
         </section>
 
         <!-- Main Article Body Section -->
-        <section class="py-20 md:py-24">
+        <section class="py-20 md:py-24 article-content">
             <div class="container mx-auto px-6 max-w-7xl">
                  <a href="blogs.html" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors group">
                             <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -278,150 +299,106 @@
 
                 <!-- Introductory Paragraph -->
                 <div class="max-w-3xl mx-auto text-center zoom-in-section">
-                    <p class="text-lg md:text-xl text-gray-300 mb-6">
-                        <em>Greater Noida, April 2025 — The moment was electric. As our vehicle Heliark surged past 90 km/h on the Yamuna Expressway, we knew we were proving what Indian student engineering is capable of.</em>
-                    </p>
-                    <p class="text-lg text-gray-300">
-                        At the Electric Solar Vehicle Championship (ESVC) 2025, held at Galgotias University, Heliark secured third place overall and an unprecedented seven major awards, including Best Design, Best Acceleration, and Best Ergonomics & Aesthetics.
+                    <p class="text-xl md:text-2xl text-gray-100 mb-6 leading-relaxed">
+                        In a city known for innovation and technology, a different kind of energy filled the corridors of Nitte Meenakshi Institute of Technology. The occasion was the SEVC Season 8 Virtual Round.
                     </p>
                 </div>
 
-                <!-- NEW: Trophy Case Section -->
-                <div class="my-20 md:my-24">
-    <h2 class="text-4xl font-bold text-center mb-12 text-white uppercase tracking-tight zoom-in-section">
-        Our <span class="text-green-400">Awards</span>
-    </h2>
-
-    <div class="flex flex-col items-center gap-10">
-
-        <div class="flex justify-center">
-            <div class="trophy-card zoom-in-section" style="transition-delay: 100ms;">
-                <span>🏆</span>
-                <h4>Third Place Overall</h4>
-            </div>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-10">
-            <div class="trophy-card zoom-in-section" style="transition-delay: 100ms;">
-                <span>🏆</span>
-                <h4>Best Design Award</h4>
-            </div>
-            <div class="trophy-card zoom-in-section" style="transition-delay: 150ms;">
-                <span>🏆</span>
-                <h4>Best Acceleration Award</h4>
-            </div>
-            <div class="trophy-card zoom-in-section" style="transition-delay: 200ms;">
-                <span>🏆</span>
-                <h4>Best Ergonomics & Aesthetics</h4>
-            </div>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-10">
-            <div class="trophy-card zoom-in-section" style="transition-delay: 250ms;">
-                <span>🏆</span>
-                <h4>Runner-Up in Innovation</h4>
-            </div>
-            <div class="trophy-card zoom-in-section" style="transition-delay: 300ms;">
-                <span>🏆</span>
-                <h4>Runner-Up in Business Plan</h4>
-            </div>
-            <div class="trophy-card zoom-in-section" style="transition-delay: 350ms;">
-                <span>🏆</span>
-                <h4>Runner-Up in Cost Plan</h4>
-            </div>
-            <div class="trophy-card zoom-in-section" style="transition-delay: 400ms;">
-                <span>🏆</span>
-                <h4>Future Award</h4>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-                <!-- Image Placeholder -->
                 <!-- 
-  Use the new "auto-slideshow" class on the main container.
--->
-<div class="zoom-in-section auto-slideshow" style="transition-delay: 500ms;">
-  
-  <!-- 
-    This wrapper holds the shape (rounded-lg, shadow-lg) 
-    and stacking context (relative). 
-    "overflow-hidden" keeps the corners rounded.
-  -->
-  <div class="relative rounded-lg shadow-lg overflow-hidden">
+                    LAYOUT CHANGE: 
+                    Removed the lg:flex wrapper and changed the main content to max-w-3xl mx-auto.
+                    Moved the sidebar to *after* the main content and centered it with max-w-xl mx-auto.
+                -->
+                
+                <!-- Main Content -->
+                <div class="max-w-3xl mx-auto mt-16 md:mt-20">
+                    <div class="zoom-in-section" style="transition-delay: 100ms;">
+                        <h3>A New Stage for Innovation</h3>
+                        <p>Coming off the momentum of ESVC 2025, where our latest vehicle Heliark achieved a top speed of 95 km/h, the SEVC Virtual Round offered a completely different kind of challenge.</p>
+                        <p>This time, the emphasis was not on performance on the track, but on strategy, design thinking, and communication; how effectively we could articulate the engineering that drives our solar-electric vehicles.</p>
+                        <p>At 12:00 PM, we took the stage to unveil our work on Heliark. Unlike the racetrack, this round tested our engineering thought process, system design, and strategic reasoning, the very foundation that drives our vehicle development.</p>
+                    </div>
+                    
+                    <!-- NEW: Presenters Section -->
+                    <div class="my-16 md:my-20">
+                        <h2 class="text-4xl font-bold text-center mb-12 text-white uppercase tracking-tight zoom-in-section">
+                            The Minds Behind the <span class="text-green-400">Machine</span>
+                        </h2>
+                        <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-5">
+                            <!-- Presenter 1 -->
+                            <div class="presenter-card zoom-in-section" style="transition-delay: 200ms;">
+                                <img src="dhyaan.png" alt="Presenter 1 Avatar" class="avatar">
+                                <h4>Dhyaan Mane</h4>
+                                <p>Vice Captain</p>
+                            </div>
+                            <!-- Presenter 2 -->
+                            <div class="presenter-card zoom-in-section" style="transition-delay: 250ms;">
+                                <img src="brandon.png" alt="Presenter 2 Avatar" class="avatar">
+                                <h4>Brandon RK</h4>
+                                <p>Electrical Head</p>
+                            </div>
+                            <!-- Presenter 3 -->
+                            <div class="presenter-card zoom-in-section" style="transition-delay: 300ms;">
+                                <img src="milind.jpg" alt="Presenter 3 Avatar" class="avatar">
+                                <h4>Milind C.</h4>
+                                <p>Electronics</p>
+                            </div>
+                            <!-- Presenter 4 -->
+                            <div class="presenter-card zoom-in-section" style="transition-delay: 350ms;">
+                                <img src="priyanshu.jpg" alt="Presenter 4 Avatar" class="avatar">
+                                <h4>Priyanshu</h4>
+                                <p>Electrical</p>
+                            </div>
+                            <!-- Presenter 5 -->
+                            <div class="presenter-card zoom-in-section" style="transition-delay: 400ms;">
+                                <img src="sriram.jpg" alt="Presenter 5 Avatar" class="avatar">
+                                <h4>Shriram V</h4>
+                                <p>Vehicle Dynamics</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="zoom-in-section" style="transition-delay: 450ms;">
+                        <p>Preparing for the round demanded rigorous internal reviews to understand the reasoning behind each design decision, material choice, and component selection, ensuring that we could defend every aspect of our vehicle with clarity and confidence.</p>
+                        <p>The SEVC Virtual Round was not just a presentation, it was an interactive dialogue with the judging panel. Their valuable feedback and technical insights provided us with new perspectives on refining our design and enhancing overall vehicle performance.</p>
+                    </div>
+                    
+                    <!-- Image Placeholder -->
+                    <div class="zoom-in-section my-16 md:my-20" style="transition-delay: 500ms;">
+                        <img src="sevc.jpg" alt="Placeholder image of the virtual presentation setup" class="rounded-lg shadow-lg w-full h-auto object-cover border border-gray-700">
+                    </div>
 
-    <!-- Image 1: Sets the size and is visible by default -->
-    <img src="WhatsApp Image 2025-06-03 at 16.31.50_36e3f7fb.jpg" 
-         alt="Description of image 1" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out opacity-100">
-    
-    <!-- Image 2: Stacked on top, hidden by default -->
-    <img src="s11.jpg" 
-         alt="Description of image 2" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
+                    <div class="zoom-in-section" style="transition-delay: 550ms;">
+                        <h3>The Event: Where Innovation Meets Evaluation</h3>
+                        <p>The judging framework at SEVC evaluated teams not only on technical content, but also on collaboration, clarity, and feasibility. Our presentation stood out for its integration of simulation insights, empirical testing, and forward-looking improvements for upcoming seasons.</p>
+                        <p>Every answer was backed by data; every claim supported by analysis. The conversation with the judges evolved into a meaningful exchange of ideas, one that offered us invaluable guidance for further refining our systems and design approach.</p>
+                    </div>
+                    
+                    <div class="zoom-in-section" style="transition-delay: 600ms;">
+                        <h3>Looking Ahead</h3>
+                        <p>With the successful completion of the SEVC Virtual Round, our focus now shifts toward physical validation, endurance optimisation, and energy telemetry refinement as we prepare for the next stage of the championship.</p>
+                    </div>
 
-    <!-- Image 3: Stacked on top, hidden by default -->
-    <img src="WhatsApp Image 2025-06-03 at 16.31.37_dc7e33d5.jpg" 
-         alt="Description of image 3" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
+                </div>
 
-    <img src="WhatsApp Image 2025-06-03 at 16.31.35_e3ec4b2c.jpg"
-         alt="Description of image 3" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
-
-    <img src="WhatsApp Image 2025-06-03 at 16.31.06_29d15642.jpg" 
-         alt="Description of image 3" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
-
-    <img src="WhatsApp Image 2025-06-03 at 16.30.50_28f75ac3.jpg" 
-         alt="Description of image 3" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
-
-    <img src="WhatsApp Image 2025-03-27 at 03.20.02_3495b74e.jpg" 
-         alt="Description of image 3" 
-         class="slideshow-img w-full h-auto object-cover transition-opacity duration-300 ease-in-out absolute top-0 left-0 opacity-0">
-
-    <!-- Add as many more images as you like -->
-
-  </div>
-</div>
-
-                <!-- NEW: Two-Column Article Content -->
-                <div class="max-w-7xl mx-auto article-content grid grid-cols-1 md:grid-cols-2 md:gap-12">
-    
-    <div class="flex flex-col gap-10"> 
-        <div class="zoom-in-section" style="transition-delay: 250ms;">
-            <h3>The Challenge That Tested It All</h3>
-            <p>ESVC is no ordinary student competition, it's Asia's largest solar-electric vehicle event, backed by NITI Aayog, the Ministry of New and Renewable Energy (MNRE), and major industry partners. Over 700 students from institutes across India participated, turning ideas into road-ready solar cars.</p>
-            <p>The main event, the ESVC-3000 rally, challenged every team to drive their solar-electric vehicle over 150 kilometres of public roads facing real traffic, variable weather, and the unforgiving test of endurance.</p>
-            <p>Before even reaching the track, teams underwent intense static and technical inspections, evaluating safety systems, electrical integrity, business plans, and cost analyses. It was a complete test of engineering, design, and discipline.</p>
-        </div>
-
-        <div class="zoom-in-section" style="transition-delay: 100ms;">
-            <img src="WhatsApp Image 2025-06-03 at 16.31.09_8b02b099.jpg" alt="Placeholder image of technical inspection" class="rounded-lg shadow-lg w-full h-auto object-cover">
-        </div>
-    </div>
-
-    <div class="flex flex-col">
-        <div class="zoom-in-section" style="transition-delay: 550ms;">
-            <h3>A Learning Experience Beyond the Track</h3>
-            <p>For us, ESVC was more than a competition it was a complete engineering journey. Every phase demanded teamwork, creativity, and perseverance. From the pre-event technical documentation to the final endurance rally, we learnt how to translate theory into real-world performance.</p>
-        
-            <h3>The Message Behind the Speed</h3>
-            <p>It proves that student teams in India can design, build, and compete at standards that rival global benchmarks.</p>
-            <h3>Looking Ahead</h3>
-            <p>As we reflect on ESVC 2025, we're grateful to the Imperial Society of Innovative Engineers (ISIEINDIA) for organising the event, and to all partners including NITI Aayog, MNRE, AICTE, and NBC Bearings for fostering this ecosystem.</p>
-            <p>For Team SolarMobil, this is not the finish line it's the starting grid for what comes next. We're already preparing to take our seventh vehicle to the World Solar Challenge, carrying forward the same values of innovation, teamwork, and sustainable engineering.</p>
-         <blockquote class="pull-quote zoom-in-section" style="transition-delay: 600ms;">
-            "A solar-powered vehicle hitting 95 km/h on Indian roads is more than a technical feat: it's a glimpse into the future of clean mobility..."
-        </blockquote>
-        </div>
-    </div>
-    
-</div>
-<div class="lg:col-span-2 zoom-in-section text-justify" style="transition-delay: 300ms;">
-     <a href="blogs.html" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors group">
+                <!-- Former Sidebar Content - Now centered below main article -->
+                <div class="max-w-xl mx-auto mt-16 md:mt-20">
+                    <div class="sidebar-widget zoom-in-section" style="transition-delay: 200ms;">
+                        <h3>Judging Framework</h3>
+                        <p class="text-gray-300 text-base mb-6">The event evaluated teams on more than just technicals. Key criteria included:</p>
+                        <ul>
+                            <li>Collaboration</li>
+                            <li>Clarity of Presentation</li>
+                            <li>Design Feasibility</li>
+                            <li>Technical Content</li>
+                            <!-- Typo from original file corrected -->
+                            <li>Integration</li> 
+                            <li>Forward-looking Improvements</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 zoom-in-section text-justify" style="transition-delay: 300ms;">
+                     <a href="blogs.html" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors group">
                             <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                             Back to All Blogs
                         </a>
@@ -468,14 +445,14 @@
                 <p>&copy; 2025 SolarMobil. All rights reserved.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                     <a href="https://www.linkedin.com/company/solarmobil-manipal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.5 2h-15A2.5 2.5 0 002 4.5v15A2.5 2.5 0 004.5 22h15a2.5 2.5 0 002.5-2.5v-15A2.5 2.5 0 0019.5 2zM8.5 18H5.5V9h3v9zm-1.5-10.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM18.5 18h-3v-4.25c0-1.02-.02-2.32-1.41-2.32-1.41 0-1.63 1.1-1.63 2.24V18h-3V9h2.88v1.32h.04c.4-.76 1.38-1.55 2.84-1.55 3.04 0 3.6 2 3.6 4.6V18z" clip-rule="evenodd" /></svg> </a>
-    <a href="https://www.instagram.com/solarmobil_manipal/?hl=en"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-gray-400 hover:text-white transition-colors"
-        aria-label="Instagram">
-      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 3a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5Zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm5.25-.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"/>
-      </svg>                   <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
+  <a href="https://www.instagram.com/solarmobil_manipal/?hl=en"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-gray-400 hover:text-white transition-colors"
+      aria-label="Instagram">
+    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 3a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5Zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm5.25-.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"/>
+    </svg>                     <a href="https://www.youtube.com/@solarmobilmit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.5 6.4S21.3 5 20.5 4.2c-.9-.9-1.8-1-2.2-1.1C16.3 3 12 3 12 3s-4.3 0-6.3.2C5.3 3.3 4.4 3.4 3.5 4.2c-.8.8-1 2.2-1 2.2S2.3 8.1 2.3 9.8v4.4c0 1.7.2 3.4.2 3.4s.2 1.4 1 2.2c.9.9 1.9.9 2.3 1C7.7 21 12 21 12 21s4.3 0 6.3-.2c.4-.1 1.3-.2 2.2-1 .8-.8 1-2.2 1-2.2s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.3V8.7l6.5 3.3-6.5 3.3z" clip-rule="evenodd" /></svg> </a>
                 </div>
             </div>
        </div>
@@ -581,32 +558,6 @@
                     });
                 }
             });
-
-           // --- ADD THIS NEW BLOCK FOR THE AUTOMATIC SLIDESHOW ---
-        const autoSlideshowContainers = document.querySelectorAll('.auto-slideshow');
-        const slideDuration = 2000; // Time per image in ms (e.g., 2000ms = 2 seconds)
-
-        autoSlideshowContainers.forEach(container => {
-            const images = container.querySelectorAll('.slideshow-img');
-            if (images.length <= 1) return; // Don't do anything if there's only one image
-
-            let currentIndex = 0;
-
-            const showImage = (index) => {
-                images.forEach((img, i) => {
-                    // Use Tailwind's opacity classes to show/hide
-                    img.classList.toggle('opacity-100', i === index);
-                    img.classList.toggle('opacity-0', i !== index);
-                });
-            };
-
-            // Start the interval immediately. No hover checks needed.
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % images.length;
-                showImage(currentIndex);
-            }, slideDuration);
-        });
-        // --- END OF NEW AUTOMATIC SLIDESHOW BLOCK ---
             
             // --- Original Menu & Scroll JS ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -644,11 +595,35 @@
             animatedElements.forEach(el => observer.observe(el));
 
             const canvas = document.getElementById('background-canvas');
-            // --- FIX: Changed 'd' to '2d' ---
-            if(canvas) { const ctx = canvas.getContext('2d'); let width, height; const resizeCanvas = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }; const drawTrack = () => { if (!ctx) return; ctx.clearRect(0, 0, width, height); ctx.strokeStyle = 'rgba(34, 197, 94, 0.5)'; ctx.lineWidth = 2; ctx.shadowColor = 'rgba(34, 197, 94, 1)'; ctx.shadowBlur = 10; ctx.beginPath(); ctx.moveTo(width * 0.1, height * 0.2); ctx.bezierCurveTo(width * 0.3, height * 0.4, width * 0.7, height * 0.1, width * 0.9, height * 0.3); ctx.stroke(); ctx.beginPath(); ctx.moveTo(width * 0.95, height * 0.8); ctx.bezierCurveTo(width * 0.8, height * 0.9, width * 0.4, height * 0.95, width * 0.1, height * 0.7); ctx.stroke(); }; window.addEventListener('resize', () => { resizeCanvas(); drawTrack(); }); resizeCanvas(); drawTrack(); }
+            // --- FIX: Added '2d' and null check ---
+            if(canvas) { 
+                const ctx = canvas.getContext('2d'); 
+                let width, height; 
+                const resizeCanvas = () => { 
+                    width = canvas.width = window.innerWidth; 
+                    height = canvas.height = window.innerHeight; 
+                }; 
+                const drawTrack = () => { 
+                    if (!ctx) return; // Null check
+                    ctx.clearRect(0, 0, width, height); 
+                    ctx.strokeStyle = 'rgba(34, 197, 94, 0.5)'; 
+                    ctx.lineWidth = 2; 
+                    ctx.shadowColor = 'rgba(34, 197, 94, 1)'; 
+                    ctx.shadowBlur = 10; 
+                    ctx.beginPath(); 
+                    ctx.moveTo(width * 0.1, height * 0.2); 
+                    ctx.bezierCurveTo(width * 0.3, height * 0.4, width * 0.7, height * 0.1, width * 0.9, height * 0.3); 
+                    ctx.stroke(); 
+                    ctx.beginPath(); 
+                    ctx.moveTo(width * 0.95, height * 0.8); 
+                    ctx.bezierCurveTo(width * 0.8, height * 0.9, width * 0.4, height * 0.95, width * 0.1, height * 0.7); 
+                    ctx.stroke(); 
+                }; 
+                window.addEventListener('resize', () => { resizeCanvas(); drawTrack(); }); 
+                resizeCanvas(); 
+                drawTrack(); 
+            }
         });
     </script>
 </body>
 </html>
-
-

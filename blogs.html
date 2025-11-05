@@ -60,6 +60,9 @@
             width: 100%;
             display: flex; /* Added for layout */
             flex-direction: column; /* Added for layout */
+            position: relative; 
+            /* This provides the visual cue that the whole card is clickable */
+            cursor: pointer;
         }
 
         .blog-card:hover {
@@ -129,9 +132,24 @@
             font-weight: 500;
             margin-bottom: 0.75rem;
         }
+
+        .stretched-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1; /* Places the invisible link overlay on top */
+            /* background-color: rgba(255,0,0,0.1); */ /* Uncomment this to see the red hitbox while testing */
+        }
         /* --- End new styles --- */
 
-        .nav-link-active { color: #ffffff !important; }
+        /* --- UPDATED Active Nav Link Style --- */
+.nav-link-active { 
+    color: #4ade80 !important; /* Tailwind's green-400 */
+    font-weight: 600 !important;
+}
         .zoom-in-section { opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in-section.is-visible { opacity: 1; transform: scale(1); }
         .dropdown { position: relative; }
@@ -191,7 +209,7 @@
 
                     <!-- --- MODIFICATION: Added 'nav-link-active' to Media button --- -->
                     <li class="dropdown">
-                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center nav-link-active">
+                        <button data-dropdown-toggle="media-dropdown" class="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center">
                             Media
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -259,27 +277,16 @@
             </div>
         </section>
 
-        <!-- Placeholder Content Section -->
-        <section class="py-20 md:py-32 zoom-in-section">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 max-w-3xl mx-auto">Coming Soon</h2>
-                <p class="max-w-2xl mx-auto mt-6 text-gray-400">
-                    Our articles are currently under development. Check back soon to subscribe to updates from the SolarMobil team!
-                </p>
-                 <div class="mt-10">
-                    <a href="index.html" class="cta-button cta-button-green mt-8">Back to Home</a>
-                </div>
-            </div>
-        </section>
-        <!-- New Filter/Search Section 
+        
+        <!-- New Filter/Search Section -->
         <section class="py-16">
             <div class="container mx-auto px-6">
                 <div class="blog-filter-bar flex flex-col md:flex-row gap-4 justify-between items-center">
-                     Search Input 
+                     <!--Search Input -->
                     <div class="w-full md:w-1/3">
                         <input type="text" id="blog-search-input" placeholder="Search articles..." class="blog-search-input w-full">
                     </div>
-                     Filter Buttons 
+                     <!--Filter Buttons--> 
                     <div id="blog-filter-buttons" class="flex flex-wrap justify-center md:justify-end gap-2">
                         <button class="blog-filter-btn active" data-filter="all">All</button>
                         <button class="blog-filter-btn" data-filter="technical">Technical</button>
@@ -290,116 +297,89 @@
             </div>
         </section>
 
-         New Blog Grid Section 
+         <!--New Blog Grid Section--> 
         <section class="pb-20 md:pb-32">
             <div class="container mx-auto px-6">
-                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     
-                     Blog Card 1 
+                     <!--Blog Card 1 -->
                     <div class="blog-card zoom-in-section" data-category="technical">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=Aero+Deep+Dive" alt="Aero Design" class="blog-card-image">
+                        <img src="strategy1.png" alt="Aero Design" class="blog-card-image">
                         <div class="blog-card-content">
                             <div>
                                 <span class="blog-category-tag">Technical</span>
-                                <h3 class="font-bold text-white text-xl mb-3">Aero Design Deep Dive: The S-Series Chassis</h3>
+                                <h3 class="font-bold text-white text-xl mb-3">The Strategy Subsystem: Where Physics Meets ML to Outsmart the Sun</h3>
                                 <p class="text-gray-400 text-sm mb-4">
-                                    Explore the computational fluid dynamics and wind tunnel testing that led to our most aerodynamic design yet.
+                                     Inside the digital brain powering real-time intelligence in solar EV endurance racing.
                                 </p>
                             </div>
                             <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Vikram Rajesh | Oct 30, 2025</p>
+                                <p class="text-xs text-gray-500">Oct 30, 2025</p>
+                                <a href="blog3.html" class="stretched-link text-green-400 font-medium mt-4 inline-block w-auto">Read More →</a>
                             </div>
                         </div>
                     </div>
 
-                     Blog Card 2
+                    <!-- Blog Card 2-->
+                    
+
+                     <!--Blog Card 3--> 
+                    <div class="blog-card zoom-in-section" data-category="team" style="transition-delay: 200ms;">
+                        <img src="blog1.jpg" alt="Team Spotlight" class="blog-card-image">
+                        <div class="blog-card-content">
+                            <div>
+                                <span class="blog-category-tag">Team</span>
+                                <h3 class="font-bold text-white text-xl mb-3">From DARPA Robotics to EV Infrastructure: Team SolarMobil Meets Industry Veteran</h3>
+                                <p class="text-gray-400 text-sm mb-4">
+                                    From DARPA Robotics to EV Infrastructure: Team SolarMobil Meets Industry Veteran
+                                </p>
+                            </div>
+                            <div class="border-t border-gray-700/50 pt-4 mt-auto">
+                                <p class="text-xs text-gray-500">Oct 15, 2025</p>
+                                <a href="blog1.html" class="stretched-link text-green-400 font-medium mt-4 inline-block w-auto">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!--Blog Card 4--> 
                     <div class="blog-card zoom-in-section" data-category="events" style="transition-delay: 100ms;">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=WSC+Recap" alt="Event Recap" class="blog-card-image">
+                        <img src="sevcblog.jpg" alt="Event Recap" class="blog-card-image">
                         <div class="blog-card-content">
                             <div>
                                 <span class="blog-category-tag">Events</span>
-                                <h3 class="font-bold text-white text-xl mb-3">Event Recap: World Solar Challenge 2025</h3>
+                                <h3 class="font-bold text-white text-xl mb-3">Team SolarMobil at SEVC VIRTUALS 2025</h3>
                                 <p class="text-gray-400 text-sm mb-4">
-                                    We crossed the finish line! Read our full recap of the highs, lows, and unforgettable moments from the Australian outback.
+                                    From Design to Dialogue: The Virtual Round at SEVC 2025
                                 </p>
                             </div>
                             <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Varun Jayram | Oct 22, 2025</p>
+                                <p class="text-xs text-gray-500">Oct 22, 2025</p>
+                                <a href="blog4.html" class="stretched-link text-green-400 font-medium mt-4 inline-block w-auto">Read More →</a>
                             </div>
                         </div>
                     </div>
 
-                     Blog Card 3 
-                    <div class="blog-card zoom-in-section" data-category="team" style="transition-delay: 200ms;">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=Team+Spotlight" alt="Team Spotlight" class="blog-card-image">
+                     <!--Blog Card 5--> 
+                    <div class="blog-card zoom-in-section" data-category="events" style="transition-delay: 400ms;">
+                        <img src="WhatsApp Image 2025-04-04 at 23.39.19_3d171d05.jpg" alt="Manufacturing" class="blog-card-image">
                         <div class="blog-card-content">
                             <div>
-                                <span class="blog-category-tag">Team</span>
-                                <h3 class="font-bold text-white text-xl mb-3">Team Spotlight: Meet the Electronics Subsystem</h3>
+                                <span class="blog-category-tag">Events</span>
+                                <h3 class="font-bold text-white text-xl mb-3">Heliark's Triumph: Breaking Records at SEVC 2025</h3>
                                 <p class="text-gray-400 text-sm mb-4">
-                                    Go behind the scenes with the minds responsible for the car's nervous system, from telemetry to battery management.
+                                    When Speed Meets Sustainability: A 100 km/h Solar-Powered Revolution
                                 </p>
                             </div>
                             <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Ansh Sukthankar | Oct 15, 2025</p>
-                            </div>
-                        </div>
-                    </div>
-
-                     Blog Card 4 
-                    <div class="blog-card zoom-in-section" data-category="technical" style="transition-delay: 300ms;">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=BMS+Innovations" alt="Battery Tech" class="blog-card-image">
-                        <div class="blog-card-content">
-                            <div>
-                                <span class="blog-category-tag">Technical</span>
-                                <h3 class="font-bold text-white text-xl mb-3">Powering the Future: Battery Management Innovations</h3>
-                                <p class="text-gray-400 text-sm mb-4">
-                                    Our custom-built Battery Management System (BMS) is smarter and more efficient than ever. Here's how it works.
-                                </p>
-                            </div>
-                            <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Pulkit Kumar | Oct 10, 2025</p>
-                            </div>
-                        </div>
-                    </div>
-
-                     Blog Card 5 
-                    <div class="blog-card zoom-in-section" data-category="technical" style="transition-delay: 400ms;">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=CAD+to+Track" alt="Manufacturing" class="blog-card-image">
-                        <div class="blog-card-content">
-                            <div>
-                                <span class="blog-category-tag">Technical</span>
-                                <h3 class="font-bold text-white text-xl mb-3">From CAD to Track: Our Manufacturing Process</h3>
-                                <p class="text-gray-400 text-sm mb-4">
-                                    A look at the late nights, carbon fiber layups, and precision engineering that bring our designs to life.
-                                </p>
-                            </div>
-                            <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Bedant Panda | Oct 05, 2025</p>
-                            </div>
-                        </div>
-                    </div>
-
-                     Blog Card 6 
-                    <div class="blog-card zoom-in-section" data-category="team" style="transition-delay: 500ms;">
-                        <img src="https://placehold.co/600x400/1a1a1a/22c55e?text=Race+Strategy" alt="Strategy" class="blog-card-image">
-                        <div class="blog-card-content">
-                            <div>
-                                <span class="blog-category-tag">Team</span>
-                                <h3 class="font-bold text-white text-xl mb-3">The Strategy Behind the Race: More Than Just Speed</h3>
-                                <p class="text-gray-400 text-sm mb-4">
-                                    How do we decide when to speed up or slow down? Our Strategy head breaks down the data-driven decisions.
-                                </p>
-                            </div>
-                            <div class="border-t border-gray-700/50 pt-4 mt-auto">
-                                <p class="text-xs text-gray-500">By Achuth S Menon | Sep 28, 2025</p>
+                                <p class="text-xs text-gray-500">Oct 05, 2025</p>
+                                <a href="blog2.html" class="stretched-link text-green-400 font-medium mt-4 inline-block w-auto">Read More →</a>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </section>-->
+        </section>
 
          <!-- Copied Contact Section -->
          <section class="contact-section py-16 relative" style=" border-top: 1px solid rgba(255, 255, 255, 0.1);">
@@ -454,6 +434,74 @@
     <!-- Copied Script, with NEW JS for filters/search -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- ADD THIS NEW BLOCK ---
+            // --- Active Nav Link Logic ---
+            try {
+                // Get the file name of the current page, e.g., "about.html" or "index.html"
+                // If it's the root domain, it defaults to "index.html"
+                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+                // Find all main nav links AND dropdown toggle buttons in the desktop nav
+                // The md\\:flex selector is needed to escape the ":" for querySelector
+                const navLinks = document.querySelectorAll('header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button');
+                
+                // Find all links in the mobile menu
+                const mobileLinks = document.querySelectorAll('#mobile-menu a');
+
+                // This function checks both desktop links and dropdowns
+                const highlightActiveLink = (links) => {
+                    links.forEach(link => {
+                        let isMatch = false;
+                        
+                        // Case 1: It's a simple <a> link (like "About" or "Partners")
+                        if (link.tagName === 'A' && link.href) {
+                            if (link.href.endsWith(currentPage)) {
+                                isMatch = true;
+                            }
+                        } 
+                        // Case 2: It's a dropdown <button> (like "Projects" or "Team")
+                        else if (link.tagName === 'BUTTON') {
+                            // Find the dropdown menu associated with this button
+                            const dropdownId = link.getAttribute('data-dropdown-toggle');
+                            if (dropdownId) {
+                                const dropdownMenu = document.getElementById(dropdownId);
+                                if (dropdownMenu) {
+                                    // Check all <a> links inside this dropdown
+                                    const dropdownLinks = dropdownMenu.querySelectorAll('a');
+                                    for (const dropdownLink of dropdownLinks) {
+                                        if (dropdownLink.href.endsWith(currentPage)) {
+                                            isMatch = true; // Found a match inside the dropdown
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // If we found a match, add the active class
+                        if (isMatch) {
+                            link.classList.add('nav-link-active');
+                        }
+                    });
+                };
+
+                highlightActiveLink(navLinks); // Run for desktop nav
+                
+                // Special logic for mobile menu (it's all plain <a> tags)
+                mobileLinks.forEach(link => {
+                     if (link.href.endsWith(currentPage)) {
+                         // Mobile menu has a different active style
+                         // (like the "Blogs" link in your example)
+                         link.style.color = '#4ade80'; // Green
+                         link.style.fontWeight = '600';
+                         link.classList.add('bg-gray-800/50'); // Active background
+                     }
+                });
+
+            } catch (error) {
+                console.error("Error highlighting active nav link:", error);
+            }
+            // --- END: Active Nav Link Logic ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuButton && mobileMenu) {
