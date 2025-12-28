@@ -1550,142 +1550,173 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Dropdown logic synced
-            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const menu = document.getElementById(toggle.getAttribute('data-dropdown-toggle'));
-                    document.querySelectorAll('.dropdown-menu').forEach(m => { if(m !== menu) m.classList.remove('is-open'); });
-                    menu.classList.toggle('is-open');
-                });
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Dropdown logic synced
+    const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const menu = document.getElementById(toggle.getAttribute('data-dropdown-toggle'));
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m !== menu) m.classList.remove('is-open');
             });
-            window.addEventListener('click', () => document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('is-open')));
-
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            }
-
-            // Sync Nav Link Active State
-            const highlightActiveLink = () => {
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                const navLinks = document.querySelectorAll('header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button');
-                navLinks.forEach(link => {
-                    let isMatch = false;
-                    if (link.tagName === 'A' && link.href.endsWith(currentPage)) isMatch = true;
-                    else if (link.tagName === 'BUTTON') {
-                        const dropdownId = link.getAttribute('data-dropdown-toggle');
-                        const dropdownMenu = document.getElementById(dropdownId);
-                        if (dropdownMenu && dropdownMenu.querySelector(`a[href*="${currentPage}"]`)) isMatch = true;
-                    }
-                    if (isMatch) link.classList.add('nav-link-active');
-                });
-            };
-            highlightActiveLink();
-
-// Filter Logic
-const filterBtns = document.querySelectorAll('.filter-btn');
-const batchHeaders = document.querySelectorAll('.batch-header');
-const filterBar = document.querySelector('#batch-filter-bar .overflow-x-auto');
-if (filterBar) filterBar.scrollLeft = 0;
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-
-        // Update buttons
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Update sections
-        batchHeaders.forEach(section => {
-            const yearEl = section.querySelector('.batch-year-bg');
-            const year = yearEl ? yearEl.textContent.trim() : '';
-
-            if (filter === 'all' || year === filter) {
-                section.style.display = 'block';
-                setTimeout(() => section.classList.add('is-visible'), 50);
-            } else {
-                section.style.display = 'none';
-                section.classList.remove('is-visible');
-            }
+            menu.classList.toggle('is-open');
         });
     });
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("alumni-form");
+    window.addEventListener('click', () =>
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('is-open'))
+    );
 
-    if (!form) return;
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    // Sync Nav Link Active State
+    const highlightActiveLink = () => {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll(
+            'header nav ul.hidden.md\\:flex > li > a, header nav ul.hidden.md\\:flex > li > button'
+        );
+        navLinks.forEach(link => {
+            let isMatch = false;
+            if (link.tagName === 'A' && link.href.endsWith(currentPage)) isMatch = true;
+            else if (link.tagName === 'BUTTON') {
+                const dropdownId = link.getAttribute('data-dropdown-toggle');
+                const dropdownMenu = document.getElementById(dropdownId);
+                if (dropdownMenu && dropdownMenu.querySelector(`a[href*="${currentPage}"]`)) {
+                    isMatch = true;
+                }
+            }
+            if (isMatch) link.classList.add('nav-link-active');
+        });
+    };
+    highlightActiveLink();
 
-        const formData = new FormData(form);
+    // =======================
+    // Filter Logic
+    // =======================
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const batchHeaders = document.querySelectorAll('.batch-header');
+    const filterBar = document.querySelector('#batch-filter-bar .overflow-x-auto');
+    if (filterBar) filterBar.scrollLeft = 0;
 
-        try {
-            const response = await fetch(form.action, {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Accept": "application/json"
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            batchHeaders.forEach(section => {
+                const yearEl = section.querySelector('.batch-year-bg');
+                const year = yearEl ? yearEl.textContent.trim() : '';
+
+                if (filter === 'all' || year === filter) {
+                    section.style.display = 'block';
+                    setTimeout(() => section.classList.add('is-visible'), 50);
+                } else {
+                    section.style.display = 'none';
+                    section.classList.remove('is-visible');
                 }
             });
+        });
+    });
 
-            if (response.ok) {
-                alert("Form submitted successfully!");
-                form.reset();
-            } else {
-                alert("Something went wrong. Please try again.");
+    // =======================
+    // Alumni Form Submission (Formspree)
+    // =======================
+    const alumniForm = document.getElementById('alumni-form');
+
+    if (alumniForm) {
+        alumniForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(alumniForm);
+
+            try {
+                const response = await fetch(alumniForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    alert('Form submitted successfully!');
+                    alumniForm.reset();
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
-        } catch (error) {
-            alert("Network error. Please check your connection.");
+        });
+    }
+
+    // =======================
+    // Intersection Observer
+    // =======================
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.zoom-in-section').forEach(el => observer.observe(el));
+
+    // Cursor Glow
+    const glow = document.getElementById('cursor-glow');
+    window.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // Scroll Effect for Header
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if (header) {
+            header.style.backgroundColor =
+                window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)';
         }
     });
-});
 
-            // Intersection Observer
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.zoom-in-section').forEach(el => observer.observe(el));
+    // Background Canvas Track
+    const canvas = document.getElementById('background-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height;
 
-            // Cursor Glow
-            const glow = document.getElementById('cursor-glow');
-            window.addEventListener('mousemove', (e) => {
-                glow.style.left = e.clientX + 'px';
-                glow.style.top = e.clientY + 'px';
-            });
+        const resize = () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        };
 
-            // Scroll Effect for Header
-            window.addEventListener('scroll', () => {
-                const header = document.getElementById('header');
-                if(header) {
-                    header.style.backgroundColor = window.scrollY > 10 ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.3)';
-                }
-            });
+        const drawTrack = () => {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(34, 197, 94, 0.2)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.1, height * 0.2);
+            ctx.bezierCurveTo(
+                width * 0.3, height * 0.4,
+                width * 0.7, height * 0.1,
+                width * 0.9, height * 0.3
+            );
+            ctx.stroke();
+        };
 
-            // Background Canvas Track
-            const canvas = document.getElementById('background-canvas');
-            if(canvas) {
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                const resize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
-                const drawTrack = () => {
-                    ctx.clearRect(0, 0, width, height);
-                    ctx.strokeStyle = 'rgba(34, 197, 94, 0.2)';
-                    ctx.lineWidth = 1.5;
-                    ctx.beginPath();
-                    ctx.moveTo(width * 0.1, height * 0.2);
-                    ctx.bezierCurveTo(width * 0.3, height * 0.4, width * 0.7, height * 0.1, width * 0.9, height * 0.3);
-                    ctx.stroke();
-                };
-                window.addEventListener('resize', () => { resize(); drawTrack(); });
-                resize(); drawTrack();
-            }
+        window.addEventListener('resize', () => {
+            resize();
+            drawTrack();
         });
-    </script>
+
+        resize();
+        drawTrack();
+    }
+});
+</script>
+
 </body>
 </html>
